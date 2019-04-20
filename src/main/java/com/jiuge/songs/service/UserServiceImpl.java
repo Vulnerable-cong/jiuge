@@ -6,6 +6,7 @@ import com.jiuge.songs.bean.User;
 import com.jiuge.songs.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 用户服务的实现类
@@ -45,6 +46,7 @@ public class UserServiceImpl implements UserService {
      * @param password
      * @return
      */
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public RespEntity register(String account, String password) {
         //默认前端用ajax校验过用户名是否重复，密码是否符合规则，所以在此直接进行插入

@@ -1,9 +1,10 @@
-package com.jiuge.songs.service;
+package com.jiuge.songs.service.Impl;
 
 import com.jiuge.songs.bean.RespCode;
 import com.jiuge.songs.bean.RespEntity;
 import com.jiuge.songs.bean.User;
 import com.jiuge.songs.mapper.UserMapper;
+import com.jiuge.songs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

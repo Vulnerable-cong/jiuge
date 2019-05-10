@@ -1,7 +1,7 @@
 package com.jiuge.songs.controller;
 
 import com.jiuge.songs.bean.RespEntity;
-import com.jiuge.songs.service.UserServiceImpl;
+import com.jiuge.songs.service.Impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public RespEntity Register(@RequestParam("account") String account, @RequestParam("password") String password){
+    public RespEntity register(@RequestParam("account") String account, @RequestParam("password") String password){
         return userServiceImpl.register(account,password);
     }
 

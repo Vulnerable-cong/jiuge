@@ -23,7 +23,7 @@ public interface SongMapper {
     List<Song>getAllSongs();
 
     /**
-     * 用歌名进行查询歌曲，支持模糊查询
+     * 根据歌名进行查询歌曲，支持模糊查询
      * @param s_name
      * @return
      */
@@ -36,7 +36,7 @@ public interface SongMapper {
     List<Song>getSongsByName(String s_name);
 
     /**
-     * 用歌曲ID进行查询歌曲
+     * 根据歌曲ID进行查询歌曲
      * @param song_ID
      * @return
      */
@@ -49,7 +49,7 @@ public interface SongMapper {
     Song getSongById(int song_ID);
 
     /**
-     * 用歌手ID进行查询歌曲
+     * 根据歌手ID进行查询歌曲
      * @param singer_ID
      * @return
      */
@@ -62,7 +62,7 @@ public interface SongMapper {
     List<Song>getSongsBySingerID(int singer_ID);
 
     /**
-     * 用歌手名进行查询歌曲，支持模糊查询
+     * 根据歌手名进行查询歌曲，支持模糊查询
      * @param si_name
      * @return
      */
@@ -75,7 +75,7 @@ public interface SongMapper {
     List<Song>getSongsBySingerName(String si_name);
 
     /**
-     * 用风格进行查询歌曲
+     * 根据风格进行查询歌曲
      * @param style
      * @return
      */
@@ -88,7 +88,7 @@ public interface SongMapper {
     List<Song>getSongsByStyle(String style);
 
     /**
-     * 用语种进行查询歌曲
+     * 根据语种进行查询歌曲
      * @param language
      * @return
      */
@@ -101,7 +101,7 @@ public interface SongMapper {
     List<Song>getSongByLanguage(String language);
 
     /**
-     * 通过歌曲ID删除歌曲
+     * 根据歌曲ID删除歌曲
      * @param song_ID
      * @return
      */

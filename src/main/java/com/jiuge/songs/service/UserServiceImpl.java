@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         //默认前端用ajax校验过用户名是否存在，所以这里只检验密码是否正确
         if (u.getU_password().equals(password)) {
             //成功就把这个用户的数据都传输到前台
-            return new RespEntity(RespCode.SUCCESS,u);
+            return new RespEntity(RespCode.Success,u);
         }
 
         return new RespEntity(RespCode.Fail);
@@ -52,6 +52,6 @@ public class UserServiceImpl implements UserService {
         //默认前端用ajax校验过用户名是否重复，密码是否符合规则，所以在此直接进行插入
         User u = new User(account,password);
         userMapper.insertUser(u);
-        return new RespEntity(RespCode.SUCCESS);
+        return new RespEntity(RespCode.Success);
     }
 }

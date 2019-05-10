@@ -7,7 +7,7 @@ package com.jiuge.songs.bean;
  */
 public enum RespCode {
     //状态码为0则代表成功
-    SUCCESS(0, "成功"),
+    Success(0, "成功"),
     //状态码为-1则代表失败
     Fail(-1, "失败");
 

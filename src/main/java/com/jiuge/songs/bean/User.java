@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 /**
  * 用户实体类
- * 试用lombok
  * @Author: Cong
  */
 @Data

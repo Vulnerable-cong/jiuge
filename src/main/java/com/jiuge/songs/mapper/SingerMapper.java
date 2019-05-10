@@ -16,11 +16,14 @@ public interface SingerMapper {
     @Select("select singer_ID,si_name,gender,si_image from singer where singer_ID=#{singer_ID}")
     Singer getSingerById(int singer_ID);
 
+    @Select("select si_name from singer where singer_ID=#{singer_ID}")
+    Singer getSingerNameById(int singer_ID);
+
     @Delete("delete from singer where singer_ID=#{singer_ID}")
     int deleteSingerById(int singer_ID);
 
     @Options(useGeneratedKeys = true,keyProperty ="singer_ID" )
-    @Insert("insert into language(l_name,l_image) values(#{l_name},#{l_image})")
+    @Insert("insert into singer(si_name,gender,si_image) values(#{si_name},#{gender},#{si_image})")
     int insertSinger(Singer singer);
 
     @Update("update singer set si_name=#{si_name},gender={gender},si_image=#{si_image} where singer_ID=#{singer_ID}")

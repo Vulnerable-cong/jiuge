@@ -18,17 +18,31 @@ public class SingerController {
     @Autowired
     SingerServiceImpl singerServiceImpl;
 
-    @GetMapping("/allSingers")
+    /**
+     * 所有歌手
+     * @return
+     */
+    @GetMapping("/allsingers")
     public RespEntity findAllSingers(){
         return singerServiceImpl.findAllSingers();
     }
 
-    @GetMapping("/findsingersbyname")
+    /**
+     * 根据歌手名搜索歌手，支持模糊查询
+     * @param si_name
+     * @return
+     */
+    @GetMapping("/singers/name")
     public RespEntity findSingersBySingerName(@RequestParam("si_name") String si_name){
         return singerServiceImpl.findSingersBySingerName(si_name);
     }
 
-    @GetMapping("/findsingersbygender")
+    /**
+     * 根据性别分类查找歌手
+     * @param gender
+     * @return
+     */
+    @GetMapping("/singers/gender")
     public RespEntity findSingerByGender(@RequestParam("gender") String gender){
         return singerServiceImpl.findSingersByGender(gender);
 

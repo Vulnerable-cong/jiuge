@@ -1,5 +1,7 @@
 package com.jiuge.songs.service.Impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jiuge.songs.bean.RespCode;
 import com.jiuge.songs.bean.RespEntity;
 import com.jiuge.songs.bean.Song;
@@ -22,13 +24,15 @@ public class SongServiceImpl implements SongService {
     SongMapper songMapper;
 
     /**
-     * 搜索所有歌曲 功能
+     * 搜索所有歌曲 功能,支持分页查询
      * @return
      */
     @Override
-    public RespEntity findAllSongs() {
+    public RespEntity findAllSongs(int pageNum) {
+        PageHelper.startPage(pageNum, 10);
         List<Song> songs = songMapper.getAllSongs();
-        return new RespEntity(RespCode.Success,songs);
+        PageInfo<Song> songPageInfo = new PageInfo<Song>(songs);
+        return new RespEntity(RespCode.Success,songPageInfo);
     }
 
     /**
@@ -73,6 +77,17 @@ public class SongServiceImpl implements SongService {
     public RespEntity findSongsByLanguage(String language) {
         List<Song> songs = songMapper.getSongByLanguage(language);
         return new RespEntity(RespCode.Success,songs);
+    }
+
+    /**
+     * 根据ID精准搜索歌曲 功能
+     * @param song_ID
+     * @return
+     */
+    @Override
+    public RespEntity findSongById(int song_ID) {
+        Song song = songMapper.getSongById(song_ID);
+        return new RespEntity(RespCode.Success,song);
     }
 
 }

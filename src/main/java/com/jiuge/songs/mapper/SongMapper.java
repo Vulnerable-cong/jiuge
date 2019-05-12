@@ -123,5 +123,5 @@ public interface SongMapper {
      * @return
      */
     @Update("update song set s_name=#{s_name},singer_ID=#{singer_ID},style=#{style},album_ID=#{album_ID}，language=#{language}，file=#{file} where song_ID=#{song_ID}")
-    int updateSong(Song song);
+    int updateSongById(Song song);
 }

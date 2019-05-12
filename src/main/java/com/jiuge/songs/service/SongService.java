@@ -12,7 +12,7 @@ public interface SongService {
      * 搜索所有歌曲
      * @return
      */
-    RespEntity findAllSongs();
+    RespEntity findAllSongs(int pageNum);
 
     /**
      * 根据歌曲名搜索歌曲
@@ -41,4 +41,11 @@ public interface SongService {
      * @return
      */
     RespEntity findSongsByLanguage(String language);
+
+    /**
+     * 根据歌曲ID搜索歌曲
+     * @param song_ID
+     * @return
+     */
+    RespEntity findSongById(int song_ID);
 }

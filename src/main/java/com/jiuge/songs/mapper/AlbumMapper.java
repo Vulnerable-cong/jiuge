@@ -14,7 +14,7 @@ public interface AlbumMapper {
      * 查询所有专辑
      * @return
      */
-    @Select("select album_ID,a_name,a_image from album")
+    @Select("select album.* from album")
     List<Album> getAllAlbum();
 
     /**
@@ -22,7 +22,7 @@ public interface AlbumMapper {
      * @param a_name
      * @return
      */
-    @Select("select album_ID,a_name,a_image from album where a_name like CONCAT('%',#{a_name},'%')")
+    @Select("select album.* from album where a_name like CONCAT('%',#{a_name},'%')")
     List<Album> getAlbumByName(String a_name);
 
     /**
@@ -30,8 +30,26 @@ public interface AlbumMapper {
      * @param album_ID
      * @return
      */
-    @Select("select album_ID,a_name,a_image from album where a_name=#{a_name}")
+    @Select("select album.* from album where a_name=#{a_name}")
     Album getAlbumById(int album_ID);
+
+    /**
+     * 根据语种查询专辑
+     * @param a_language
+     * @return
+     */
+    @Select("select album.* from album where a_language=#{a_language}")
+    List<Album> getAlbumByLanguage(String a_language);
+
+    /**
+     * 根据风格查询专辑
+     * @param a_style
+     * @return
+     */
+    @Select("select album.* from album where a_style=#{a_style}")
+    List<Album> getAlbumByStyle(String a_style);
+
+
 
     /**
      * 根据专辑ID删除专辑
@@ -47,7 +65,8 @@ public interface AlbumMapper {
      * @return
      */
     @Options(useGeneratedKeys = true,keyProperty ="album_ID" )
-    @Insert("insert into album(a_name,a_image) values(#{a_name},#{a_image})")
+    @Insert("insert into album(a_name,a_image,a_language,a_style)\n" +
+            "values(#{a_name},#{a_image},#{a_language},#{a_style})")
     int insertAlbum(Album album);
 
     /**
@@ -55,6 +74,7 @@ public interface AlbumMapper {
      * @param album
      * @return
      */
-    @Update("update album set a_name=#{a_name},a_image=#{a_image} where album_ID=#{album_ID}")
+    @Update("update album set a_name=#{a_name},a_image=#{a_image}\n" +
+            ",a_language=#{a_language},a_style=#{a_style} where album_ID=#{album_ID}")
     int updateAlbum(Album album);
 }

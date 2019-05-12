@@ -49,7 +49,7 @@ public interface UserMapper {
      * @return
      */
     @Options(useGeneratedKeys = true,keyProperty ="user_ID" )
-    @Insert("insert into user(u_account,u_name,u_password,u_avatar) values(#{u_account},#{u_name},#{u_password},#{u_avatar})")
+    @Insert("insert into user(u_account,u_name,u_password,u_avatar,createtime) values(#{u_account},#{u_name},#{u_password},#{u_avatar},#{createtime})")
     int insertUser(User user);
 
     /**

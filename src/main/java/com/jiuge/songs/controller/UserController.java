@@ -19,11 +19,23 @@ public class UserController {
     @Autowired
     UserServiceImpl userServiceImpl;
 
+    /**
+     * 登录
+     * @param account
+     * @param password
+     * @return
+     */
     @PostMapping("/login")
     public RespEntity login(@RequestParam("account") String account, @RequestParam("password") String password){
         return userServiceImpl.login(account,password);
     }
 
+    /**
+     * 注册
+     * @param account
+     * @param password
+     * @return
+     */
     @PostMapping("/register")
     public RespEntity register(@RequestParam("account") String account, @RequestParam("password") String password){
         return userServiceImpl.register(account,password);

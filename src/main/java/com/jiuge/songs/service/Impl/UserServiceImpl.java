@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 用户服务的实现类
  * @Author: Cong
@@ -50,8 +53,13 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = {Exception.class})
     @Override
     public RespEntity register(String account, String password) {
+
+        //注册时把当前时间放入用户表中，记为创建时间，只记到年月日
+        Date date = new Date();
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
+
         //默认前端用ajax校验过用户名是否重复，密码是否符合规则，所以在此直接进行插入
-        User u = new User(account,password);
+        User u = new User(account,password,date);
         userMapper.insertUser(u);
         return new RespEntity(RespCode.Success);
     }

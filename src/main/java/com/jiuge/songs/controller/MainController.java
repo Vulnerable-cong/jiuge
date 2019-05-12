@@ -12,14 +12,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
+    /**
+     * 进入主页
+     * @return
+     */
     @GetMapping("/")
     public String root(){
-        return "html/index.html";
+        return "index";
     }
 
     @GetMapping("/index")
     public String index(){
-        return "html/index.html";
+        return "index";
     }
 }
 

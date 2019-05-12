@@ -58,7 +58,11 @@ public class UserServiceImpl implements UserService {
 
         //默认前端用ajax校验过用户名是否重复，密码是否符合规则，所以在此直接进行插入
         User u = new User(account,password,date);
-        userMapper.insertUser(u);
-        return new RespEntity(RespCode.Success);
+        int i = userMapper.insertUser(u);
+        if (i == 1){
+            return new RespEntity(RespCode.Success);
+        }else {
+            return new RespEntity(RespCode.Fail);
+        }
     }
 }

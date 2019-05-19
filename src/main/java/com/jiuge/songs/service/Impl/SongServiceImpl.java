@@ -10,6 +10,7 @@ import com.jiuge.songs.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,8 +18,10 @@ import java.util.List;
  * @Author: Cong
  * @Date: 2019/5/10 16:26
  */
-@Service("SongService")
+@Service
 public class SongServiceImpl implements SongService {
+
+    public static final int INDEXSONGNUM = 6;
 
     @Autowired
     SongMapper songMapper;
@@ -88,6 +91,46 @@ public class SongServiceImpl implements SongService {
     public RespEntity findSongById(int song_ID) {
         Song song = songMapper.getSongById(song_ID);
         return new RespEntity(RespCode.Success,song);
+    }
+
+    /**
+     * 根据歌曲ID找到歌曲文件名
+     * 播放时发送的执行的操作
+     * @param song_ID
+     * @return
+     */
+    @Override
+    public RespEntity findSongFile(int song_ID) {
+        String file = songMapper.getSongFile(song_ID);
+        return new RespEntity(RespCode.Success,file);
+    }
+
+    /**
+     * 增加播放量
+     * 每次加一
+     * @param song_ID
+     * @return
+     */
+    @Override
+    public RespEntity increasePlay(int song_ID) {
+        int play = songMapper.getSongPlay(song_ID);
+        play++;
+        songMapper.updateSongPlay(song_ID,play);
+        return new RespEntity(RespCode.Success);
+    }
+
+    /**
+     * 拿到主页需要的歌
+     * @return
+     */
+    @Override
+    public RespEntity indexSong() {
+        List<Song> songs = new ArrayList<Song>();
+        int[] id = {1,9,13,16,18,20};
+        for (int i = 0; i < INDEXSONGNUM; i++) {
+            songs.add(songMapper.getSongById(id[i]));
+        }
+        return new RespEntity(RespCode.Success,songs);
     }
 
 }

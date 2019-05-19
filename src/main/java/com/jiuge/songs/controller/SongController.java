@@ -1,9 +1,10 @@
 package com.jiuge.songs.controller;
 
 import com.jiuge.songs.bean.RespEntity;
-import com.jiuge.songs.service.Impl.SongServiceImpl;
+import com.jiuge.songs.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,16 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class SongController {
 
     @Autowired
-    SongServiceImpl songServiceImpl;
+    SongService songService;
 
     /**
      * 所有歌曲，支持分页查询
      * @param pageNum
      * @return
      */
-    @GetMapping("/allSongs")
+    @GetMapping("/allsongs")
     public RespEntity findAllSongs(@RequestParam(defaultValue = "1") int pageNum){
-        return songServiceImpl.findAllSongs(pageNum);
+        return songService.findAllSongs(pageNum);
     }
 
     /**
@@ -35,7 +36,7 @@ public class SongController {
      */
     @GetMapping("/songs/name")
     public RespEntity findSongsBySongName(@RequestParam("s_name") String s_name){
-        return songServiceImpl.findSongsBySongName(s_name);
+        return songService.findSongsBySongName(s_name);
     }
 
     /**
@@ -45,7 +46,7 @@ public class SongController {
      */
     @GetMapping("/songs/singer")
     public RespEntity findSongsBySingerName(@RequestParam("si_name") String si_name){
-        return songServiceImpl.findSongsBySingerName(si_name);
+        return songService.findSongsBySingerName(si_name);
     }
 
     /**
@@ -55,7 +56,7 @@ public class SongController {
      */
     @GetMapping("/song/id")
     public RespEntity findSongById(@RequestParam("song_ID") int song_ID){
-        return songServiceImpl.findSongById(song_ID);
+        return songService.findSongById(song_ID);
     }
 
     /**
@@ -65,7 +66,7 @@ public class SongController {
      */
     @GetMapping("/songs/style")
     public RespEntity findSongsByStyle(@RequestParam("style") String style){
-        return songServiceImpl.findSongsByStyle(style);
+        return songService.findSongsByStyle(style);
     }
 
     /**
@@ -75,7 +76,39 @@ public class SongController {
      */
     @GetMapping("/songs/language")
     public RespEntity findSongsByLanguage(@RequestParam("language") String language){
-        return songServiceImpl.findSongsByLanguage(language);
+        return songService.findSongsByLanguage(language);
+    }
+
+    /**
+     * 根据歌曲ID拿到歌曲的文件名（播放）
+     * @param song_ID
+     * @return
+     */
+    @GetMapping("/song/file")
+    public RespEntity findSongFile(@RequestParam("song_ID") int song_ID){
+        return songService.findSongFile(song_ID);
+    }
+
+
+    /**
+     * 拿到主页需要的歌
+     * @return
+     */
+    @GetMapping("/indexsongs")
+    public RespEntity indexSongs(){
+        return songService.indexSong();
+    }
+
+    /**
+     * 增加歌曲播放量
+     * 每次加一
+     * 本质是修改数据库的数据，故使用put请求
+     * @param song_ID
+     * @return
+     */
+    @PutMapping("/song/increase")
+    public RespEntity increasePlay(@RequestParam("song_ID") int song_ID){
+        return songService.increasePlay(song_ID);
     }
 
 

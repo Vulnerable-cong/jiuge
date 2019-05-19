@@ -15,10 +15,10 @@ public interface SongMapper {
      * 查询所有歌曲
      * @return
      */
-    @Select("select t.* , album.a_name\n" +
-            "from (select song.* ,singer.si_name\n" +
+    @Select("select t.* , album.a_name, album.a_image\n" +
+            "from (select song.song_ID,song.s_name,song.singer_ID,singer.si_name,song.style,song.language,song.play,song.duration,song.album_ID\n" +
             "from song Left outer join singer\n" +
-            "on song.singer_ID = singer.singer_ID ) as t Left outer join album\n" +
+            "on song.singer_ID = singer.singer_ID )as t Left outer join album\n" +
             "on t.album_ID = album.album_ID")
     List<Song>getAllSongs();
 
@@ -27,8 +27,8 @@ public interface SongMapper {
      * @param s_name
      * @return
      */
-    @Select("select t.* , album.a_name\n" +
-            "from (select song.* ,singer.si_name\n" +
+    @Select("select t.* , album.a_name, album.a_image\n" +
+            "from (select song.song_ID,song.s_name,song.singer_ID,singer.si_name,song.style,song.language,song.play,song.duration,song.album_ID\n" +
             "from song Left outer join singer\n" +
             "on song.singer_ID = singer.singer_ID )as t Left outer join album\n" +
             "on t.album_ID = album.album_ID\n" +
@@ -40,8 +40,8 @@ public interface SongMapper {
      * @param song_ID
      * @return
      */
-    @Select("select t.* , album.a_name\n" +
-            "from (select song.* ,singer.si_name\n" +
+    @Select("select t.* , album.a_name, album.a_image\n" +
+            "from (select song.song_ID,song.s_name,song.singer_ID,singer.si_name,song.style,song.language,song.play,song.duration,song.album_ID\n" +
             "from song Left outer join singer\n" +
             "on song.singer_ID = singer.singer_ID )as t Left outer join album\n" +
             "on t.album_ID = album.album_ID\n" +
@@ -53,8 +53,8 @@ public interface SongMapper {
      * @param singer_ID
      * @return
      */
-    @Select("select t.* , album.a_name\n" +
-            "from (select song.* ,singer.si_name\n" +
+    @Select("select t.* , album.a_name, album.a_image\n" +
+            "from (select song.song_ID,song.s_name,song.singer_ID,singer.si_name,song.style,song.language,song.play,song.duration,song.album_ID\n" +
             "from song Left outer join singer\n" +
             "on song.singer_ID = singer.singer_ID )as t Left outer join album\n" +
             "on t.album_ID = album.album_ID\n" +
@@ -66,8 +66,8 @@ public interface SongMapper {
      * @param si_name
      * @return
      */
-    @Select("select t.* , album.a_name\n" +
-            "from (select song.* ,singer.si_name\n" +
+    @Select("select t.* , album.a_name, album.a_image\n" +
+            "from (select song.song_ID,song.s_name,song.singer_ID,singer.si_name,song.style,song.language,song.play,song.duration,song.album_ID\n" +
             "from song Left outer join singer\n" +
             "on song.singer_ID = singer.singer_ID )as t Left outer join album\n" +
             "on t.album_ID = album.album_ID\n" +
@@ -79,8 +79,8 @@ public interface SongMapper {
      * @param style
      * @return
      */
-    @Select("select t.* , album.a_name\n" +
-            "from (select song.* ,singer.si_name\n" +
+    @Select("select t.* , album.a_name, album.a_image\n" +
+            "from (select song.song_ID,song.s_name,song.singer_ID,singer.si_name,song.style,song.language,song.play,song.duration,song.album_ID\n" +
             "from song Left outer join singer\n" +
             "on song.singer_ID = singer.singer_ID )as t Left outer join album\n" +
             "on t.album_ID = album.album_ID\n" +
@@ -92,13 +92,30 @@ public interface SongMapper {
      * @param language
      * @return
      */
-    @Select("select t.* , album.a_name\n" +
-            "from (select song.* ,singer.si_name\n" +
+    @Select("select t.* , album.a_name, album.a_image\n" +
+            "from (select song.song_ID,song.s_name,song.singer_ID,singer.si_name,song.style,song.language,song.play,song.duration,song.album_ID\n" +
             "from song Left outer join singer\n" +
             "on song.singer_ID = singer.singer_ID )as t Left outer join album\n" +
-            "on t.album_ID = album.album_ID" +
+            "on t.album_ID = album.album_ID\n" +
             "where language = #{language}")
     List<Song>getSongByLanguage(String language);
+
+
+    /**
+     * 根据ID精准找到文件名
+     * @param song_ID
+     * @return
+     */
+    @Select("select song.file from song where song_ID=#{song_ID}")
+    String getSongFile(int song_ID);
+
+    /**
+     * 根据ID精准查出歌曲的播放量
+     * @param song_ID
+     * @return
+     */
+    @Select("select song.play from song where song_ID=#{song_ID}")
+    int getSongPlay(int song_ID);
 
     /**
      * 根据歌曲ID删除歌曲
@@ -114,7 +131,7 @@ public interface SongMapper {
      * @return
      */
     @Options(useGeneratedKeys = true,keyProperty ="song_ID" )
-    @Insert("insert into song(s_name,singer_ID,style,album_ID,language,file) values(#{s_name},#{singer_ID},#{style},#{album_ID},#{language},#{file})")
+    @Insert("insert into song(s_name,singer_ID,style,album_ID,language,file,duration) values(#{s_name},#{singer_ID},#{style},#{album_ID},#{language},#{file},#{duration})")
     int insertSong(Song song);
 
     /**
@@ -122,6 +139,15 @@ public interface SongMapper {
      * @param song
      * @return
      */
-    @Update("update song set s_name=#{s_name},singer_ID=#{singer_ID},style=#{style},album_ID=#{album_ID}，language=#{language}，file=#{file} where song_ID=#{song_ID}")
+    @Update("update song set s_name=#{s_name},singer_ID=#{singer_ID},style=#{style},album_ID=#{album_ID}，language=#{language}，file=#{file}, duration=#{duration} where song_ID=#{song_ID}")
     int updateSongById(Song song);
+
+    /**
+     * 修改歌曲播放量
+     * @param song_ID
+     * @param play
+     * @return
+     */
+    @Update("update song set song.play=#{play} where song_ID=#{song_ID}")
+    int updateSongPlay(@Param("song_ID")int song_ID,@Param("play")int play);
 }

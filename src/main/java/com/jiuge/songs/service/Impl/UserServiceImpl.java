@@ -16,7 +16,7 @@ import java.util.Date;
  * @Author: Cong
  * @Date: 2019/4/18 21:12
  */
-@Service("UserService")
+@Service
 public class UserServiceImpl implements UserService {
 
 
@@ -32,14 +32,22 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public RespEntity login(String account, String password) {
-        User u = userMapper.getUserByAccount(account);
-        //默认前端用ajax校验过用户名是否存在，所以这里只检验密码是否正确
-        if (u.getU_password().equals(password)) {
-            //成功就把这个用户的数据都传输到前台
-            return new RespEntity(RespCode.Success,u);
-        }
+        User u = null;
+        try {
+            u = userMapper.getUserByAccount(account);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
 
-        return new RespEntity(RespCode.Fail);
+        }
+        if (u == null) {
+            return new RespEntity(RespCode.NoUser);
+        } else if (u.getU_password().equals(password)) {
+            //成功就把这个用户的数据都传输到前台
+            return new RespEntity(RespCode.Success, u);
+        } else {
+
+            return new RespEntity(RespCode.PwdError);
+        }
     }
 
 

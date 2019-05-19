@@ -1,7 +1,7 @@
 package com.jiuge.songs.controller;
 
 import com.jiuge.songs.bean.RespEntity;
-import com.jiuge.songs.service.Impl.UserServiceImpl;
+import com.jiuge.songs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    UserServiceImpl userServiceImpl;
+    UserService userService;
 
     /**
      * 登录
@@ -27,7 +27,7 @@ public class UserController {
      */
     @PostMapping("/login")
     public RespEntity login(@RequestParam("account") String account, @RequestParam("password") String password){
-        return userServiceImpl.login(account,password);
+        return userService.login(account,password);
     }
 
     /**
@@ -38,7 +38,7 @@ public class UserController {
      */
     @PostMapping("/register")
     public RespEntity register(@RequestParam("account") String account, @RequestParam("password") String password){
-        return userServiceImpl.register(account,password);
+        return userService.register(account,password);
     }
 
 }

@@ -26,7 +26,7 @@ public interface SheetMapper {
      * @return
      */
     @Select("select sheet.sheet_ID,sheet.sh_name,a.* \n" +
-            "from (select t.* , album.a_name\n" +
+            "from (select t.* , album.a_name, album.a_image\n" +
             "from (select song.* ,singer.si_name\n" +
             "from song Left outer join singer\n" +
             "on song.singer_ID = singer.singer_ID )as t Left outer join album\n" +
@@ -80,14 +80,23 @@ public interface SheetMapper {
             "where scene = #{scene}")
     List<Sheet> getSheetByScene(String scene);
 
+
+    /**
+     * 根据ID精准查出歌单的播放量
+     * @param sheet_ID
+     * @return
+     */
+    @Select("select sheet.play from sheet where sheet_ID=#{sheet_ID}")
+    int getSheetPlay(int sheet_ID);
+
     /**
      * 添加歌单（创建）
      * @param sheet
      * @return
      */
     @Options(useGeneratedKeys = true,keyProperty ="sheet_ID" )
-    @Insert("insert into song(sh_name,user_ID,clicktime,createtime,language,style，mood，scene)\n" +
-            "values(#{sh_name},#{user_ID},#{clicktime},#{createtime},#{language},#{style},#{mood},#{scene})")
+    @Insert("insert into song(sh_name,user_ID,play,createtime,language,style，mood，scene,sh_image)\n" +
+            "values(#{sh_name},#{user_ID},#{play},#{createtime},#{language},#{style},#{mood},#{scene},#{sh_image})")
     int insertSheet(Sheet sheet);
 
     /**
@@ -116,12 +125,28 @@ public interface SheetMapper {
     @Delete("delete from sheet_song where sheet_ID=#{sheet_ID} and song_ID=#{song_ID}")
     int deleteSongOfSheet(@Param("sheet_ID")int sheet_ID,@Param("song_ID")int song_ID);
 
+
     /**
      * 根据歌单id修改对应歌单信息，所属用户，点击率，创建时间没必要修改
+     * @param sh_name
+     * @param language
+     * @param style
+     * @param mood
+     * @param scene
+     * @param sh_image
      * @param sheet_ID
      * @return
      */
-    @Update("update sheet t set t.sh_name=#{sh_name},t.language=#{language},t.style=#{style},t.mood=#{mood},t.scene=#{scene}\n" +
+    @Update("update sheet t set t.sh_name=#{sh_name},t.language=#{language},t.style=#{style},t.mood=#{mood},t.scene=#{scene},t.sh_image=#{sh_image}\n" +
             "where sheet_ID = #{sheet_ID}")
-    int updateSheetById(@Param("sh_name")String sh_name,@Param("language")String language,@Param("style")String style,@Param("mood")String mood,@Param("scene")String scene,@Param("sheet_ID")int sheet_ID);
+    int updateSheetById(@Param("sh_name")String sh_name,@Param("language")String language,@Param("style")String style,@Param("mood")String mood,@Param("scene")String scene,@Param("sh_image")String sh_image, @Param("sheet_ID")int sheet_ID);
+
+    /**
+     * 修改歌单播放量
+     * @param sheet_ID
+     * @param play
+     * @return
+     */
+    @Update("update sheet set sheet.play=#{play} where sheet_ID=#{sheet_ID}")
+    int updateSheetPlay(@Param("sheet_ID")int sheet_ID,@Param("play")int play);
 }

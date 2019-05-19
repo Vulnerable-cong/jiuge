@@ -70,9 +70,10 @@ public interface SheetService {
      * @param style
      * @param mood
      * @param scene
+     * @param sh_image
      * @return
      */
-    RespEntity newSheet(String sh_name,int user_ID,String language,String style,String mood,String scene);
+    RespEntity newSheet(String sh_name,int user_ID,String language,String style,String mood,String scene,String sh_image);
 
     /**
      * 添加歌曲进歌单
@@ -97,6 +98,7 @@ public interface SheetService {
      */
     RespEntity deleteSongOfSheet(int sheet_ID,int song_ID);
 
+
     /**
      * 修改歌单信息
      * @param sh_name
@@ -104,8 +106,25 @@ public interface SheetService {
      * @param style
      * @param mood
      * @param scene
+     * @param sh_image
      * @param sheet_ID
      * @return
      */
-    RespEntity updateSheet(String sh_name,String language,String style,String mood,String scene,int sheet_ID);
+    RespEntity updateSheet(String sh_name,String language,String style,String mood,String scene,String sh_image,int sheet_ID);
+
+//    /**
+//     * 在歌单里播放音乐
+//     * @param sheet_ID
+//     * @param song_ID
+//     * @return
+//     */
+//    RespEntity playInSheet(int sheet_ID, int song_ID);
+
+
+    /**
+     * 增加歌单播放量
+     * @param sheet_ID
+     * @return
+     */
+    RespEntity increasePlay(int sheet_ID);
 }

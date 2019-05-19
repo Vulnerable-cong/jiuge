@@ -7,6 +7,7 @@ import com.jiuge.songs.bean.RespEntity;
 import com.jiuge.songs.bean.Sheet;
 import com.jiuge.songs.bean.SongsInSheet;
 import com.jiuge.songs.mapper.SheetMapper;
+import com.jiuge.songs.mapper.SongMapper;
 import com.jiuge.songs.service.SheetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,12 @@ import java.util.List;
  * @Author: Cong
  * @Date: 2019/5/12 16:48
  */
-@Service("SheetService")
+@Service
 public class SheetServiceImpl implements SheetService {
 
     @Autowired
     SheetMapper sheetMapper;
+    SongMapper songMapper;
 
     /**
      * 根据歌单id查询出该歌单里的所有歌曲信息
@@ -132,11 +134,11 @@ public class SheetServiceImpl implements SheetService {
      */
     @Transactional(rollbackFor = {Exception.class})
     @Override
-    public RespEntity newSheet(String sh_name, int user_ID, String language, String style, String mood, String scene) {
+    public RespEntity newSheet(String sh_name, int user_ID, String language, String style, String mood, String scene, String sh_image ) {
         //新建时把当前时间放入歌单表中，记为创建时间，只记到年月日
         Date date = new Date();
 
-        Sheet sheet = new Sheet(sh_name,user_ID,0,date,language,style,mood,scene);
+        Sheet sheet = new Sheet(sh_name,user_ID,0,date,language,style,mood,scene,sh_image);
         int i = sheetMapper.insertSheet(sheet);
         if (i == 1){
         return new RespEntity(RespCode.Success);}
@@ -202,12 +204,13 @@ public class SheetServiceImpl implements SheetService {
      * @param style
      * @param mood
      * @param scene
+     * @param sh_image
      * @param sheet_ID
      * @return
      */
     @Override
-    public RespEntity updateSheet(String sh_name, String language, String style, String mood, String scene, int sheet_ID) {
-        int i = sheetMapper.updateSheetById(sh_name,language,style,mood,scene,sheet_ID);
+    public RespEntity updateSheet(String sh_name, String language, String style, String mood, String scene,String sh_image , int sheet_ID) {
+        int i = sheetMapper.updateSheetById(sh_name,language,style,mood,scene,sh_image,sheet_ID);
         if (i ==1){
             return new RespEntity(RespCode.Success);
         }else{
@@ -215,5 +218,35 @@ public class SheetServiceImpl implements SheetService {
         }
     }
 
+    /**
+     * 增加歌单播放量
+     * 每次加一
+     * @param sheet_ID
+     * @return
+     */
+    @Override
+    public RespEntity increasePlay(int sheet_ID) {
+        int play = sheetMapper.getSheetPlay(sheet_ID);
+        play++;
+        sheetMapper.updateSheetPlay(sheet_ID,play);
+        return new RespEntity(RespCode.Success);
+    }
+
+//    /**
+//     * 根据歌曲ID找到歌曲文件名
+//     * 播放时发送的执行的操作
+//     * @param sheet_ID
+//     * @param song_ID
+//     * @return
+//     */
+//    @Override
+//    public RespEntity playInSheet(int sheet_ID, int song_ID) {
+//        String file = songMapper.getSongFile(song_ID);
+//        int play = sheetMapper.getSheetPlay(sheet_ID);
+//        play++;
+//        sheetMapper.updateSheetPlay(sheet_ID,play);
+//        return new RespEntity(RespCode.Success,file);
+//
+//    }
 
 }

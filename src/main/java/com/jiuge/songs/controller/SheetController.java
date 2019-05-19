@@ -1,12 +1,9 @@
 package com.jiuge.songs.controller;
 
 import com.jiuge.songs.bean.RespEntity;
-import com.jiuge.songs.service.Impl.SheetServiceImpl;
+import com.jiuge.songs.service.SheetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 歌单Controller
@@ -17,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SheetController {
 
     @Autowired
-    SheetServiceImpl sheetServiceImpl;
+    SheetService sheetService;
 
     /**
      * 根据歌单id找到对应歌单里的歌曲的信息
@@ -26,7 +23,7 @@ public class SheetController {
      */
     @GetMapping("/sheet/songs")
     public RespEntity findSheetSongsById(@RequestParam("sheet_ID") int sheet_ID){
-        return sheetServiceImpl.findSISById(sheet_ID);
+        return sheetService.findSISById(sheet_ID);
     }
 
     /**
@@ -36,7 +33,7 @@ public class SheetController {
      */
     @GetMapping("/allsheets")
     public RespEntity findAllSheet(@RequestParam(defaultValue = "1") int pageNum){
-        return sheetServiceImpl.findAllSheet(pageNum);
+        return sheetService.findAllSheet(pageNum);
     }
 
     /**
@@ -46,8 +43,8 @@ public class SheetController {
      * @return
      */
     @GetMapping("/sheets/name")
-    public RespEntity findSheetsByName(String sh_name,@RequestParam(defaultValue = "1") int pageNum){
-        return sheetServiceImpl.findSheetsByName(sh_name,pageNum);
+    public RespEntity findSheetsByName(@RequestParam("sh_name")String sh_name,@RequestParam(defaultValue = "1") int pageNum){
+        return sheetService.findSheetsByName(sh_name,pageNum);
     }
 
     /**
@@ -57,8 +54,8 @@ public class SheetController {
      * @return
      */
     @GetMapping("/sheets/language")
-    public RespEntity findSheetsByLanguage(String language,@RequestParam(defaultValue = "1") int pageNum){
-        return sheetServiceImpl.findSheetsByLanguage(language,pageNum);
+    public RespEntity findSheetsByLanguage(@RequestParam("language")String language,@RequestParam(defaultValue = "1") int pageNum){
+        return sheetService.findSheetsByLanguage(language,pageNum);
     }
 
     /**
@@ -68,8 +65,8 @@ public class SheetController {
      * @return
      */
     @GetMapping("/sheets/style")
-    public RespEntity findSheetsByStyle(String style,@RequestParam(defaultValue = "1") int pageNum){
-        return sheetServiceImpl.findSheetsByStyle(style,pageNum);
+    public RespEntity findSheetsByStyle(@RequestParam("style")String style,@RequestParam(defaultValue = "1") int pageNum){
+        return sheetService.findSheetsByStyle(style,pageNum);
     }
 
     /**
@@ -79,8 +76,8 @@ public class SheetController {
      * @return
      */
     @GetMapping("/sheets/mood")
-    public RespEntity findSheetsByMood(String mood,@RequestParam(defaultValue = "1") int pageNum){
-        return sheetServiceImpl.findSheetsByMood(mood,pageNum);
+    public RespEntity findSheetsByMood(@RequestParam("mood")String mood,@RequestParam(defaultValue = "1") int pageNum){
+        return sheetService.findSheetsByMood(mood,pageNum);
     }
 
     /**
@@ -90,19 +87,46 @@ public class SheetController {
      * @return
      */
     @GetMapping("/sheets/scene")
-    public RespEntity findSheetsByScene(String scene,@RequestParam(defaultValue = "1") int pageNum){
-        return sheetServiceImpl.findSheetByScene(scene,pageNum);
+    public RespEntity findSheetsByScene(@RequestParam("scene")String scene,@RequestParam(defaultValue = "1") int pageNum){
+        return sheetService.findSheetByScene(scene,pageNum);
     }
 
     /**
      * 新建歌单
+     * @param sh_name
+     * @param user_ID
+     * @param language
+     * @param style
+     * @param mood
+     * @param scene
+     * @param sh_image
      * @return
      */
     @PostMapping("/sheet")
     public RespEntity newSheet(@RequestParam("sh_name") String sh_name,@RequestParam("user_ID") int user_ID,
                                @RequestParam("language") String language,@RequestParam("style") String style,
-                               @RequestParam("language") String mood,@RequestParam("language") String scene){
+                               @RequestParam("language") String mood,@RequestParam("language") String scene,
+                               @RequestParam("sh_image") String sh_image){
 
-        return sheetServiceImpl.newSheet(sh_name,user_ID,language,style,mood,scene);
+        return sheetService.newSheet(sh_name,user_ID,language,style,mood,scene,sh_image);
     }
+
+//    @GetMapping("/sheet/play")
+//    public RespEntity playInSheet(@RequestParam("sheet_ID") int sheet_ID,@RequestParam("song_ID") int song_ID){
+//        return sheetServiceImpl.playInSheet(sheet_ID,song_ID);
+//    }
+
+
+    /**
+     * 增加歌单播放量
+     * 每次加一
+     * 本质是修改数据库的数据，故使用put请求
+     * @param sheet_ID
+     * @return
+     */
+    @PutMapping("/sheet/increase")
+    public RespEntity increasePlay(@RequestParam("sheet_ID") int sheet_ID){
+        return sheetService.increasePlay(sheet_ID);
+    }
+
 }

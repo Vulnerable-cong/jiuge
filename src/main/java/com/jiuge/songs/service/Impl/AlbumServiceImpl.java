@@ -15,7 +15,7 @@ import java.util.List;
  * @Author: Cong
  * @Date: 2019/5/10 17:11
  */
-@Service("AlbumService")
+@Service
 public class AlbumServiceImpl implements AlbumService {
 
     @Autowired

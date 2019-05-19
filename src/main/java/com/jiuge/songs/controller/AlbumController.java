@@ -1,7 +1,7 @@
 package com.jiuge.songs.controller;
 
 import com.jiuge.songs.bean.RespEntity;
-import com.jiuge.songs.service.Impl.AlbumServiceImpl;
+import com.jiuge.songs.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AlbumController {
 
     @Autowired
-    AlbumServiceImpl albumServiceImpl;
+    AlbumService albumService;
 
     /**
      * 所有专辑
@@ -23,7 +23,7 @@ public class AlbumController {
      */
     @GetMapping("/allalbums")
     public RespEntity findAllAlbums(){
-        return albumServiceImpl.findAllAlbums();
+        return albumService.findAllAlbums();
     }
 
     /**
@@ -33,7 +33,7 @@ public class AlbumController {
      */
     @GetMapping("/albums/name")
     public RespEntity findAlbumsByAlbumName(String a_name){
-        return albumServiceImpl.findAlbumsByAlbumName(a_name);
+        return albumService.findAlbumsByAlbumName(a_name);
     }
 
 }

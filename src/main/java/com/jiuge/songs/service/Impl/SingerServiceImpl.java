@@ -15,7 +15,7 @@ import java.util.List;
  * @Author: Cong
  * @Date: 2019/5/10 16:56
  */
-@Service("SingerService")
+@Service
 public class SingerServiceImpl implements SingerService {
 
 

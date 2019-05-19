@@ -17,6 +17,7 @@ public interface AlbumService {
 
     /**
      * 根据专辑名搜索专辑
+     * @param a_name
      * @return
      */
     RespEntity findAlbumsByAlbumName(String a_name);

@@ -47,7 +47,7 @@ public interface SingerMapper {
      * @param gender
      * @return
      */
-    @Select("select singer_ID,si_name,gender,si_image from singer where gender=#{gender}")
+    @Select("select singer_ID,si_name,gender,si_image from singer where gender = #{gender}")
     List<Singer> getSingerByGender(String gender);
 
     /**

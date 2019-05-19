@@ -1,7 +1,7 @@
 package com.jiuge.songs.controller;
 
 import com.jiuge.songs.bean.RespEntity;
-import com.jiuge.songs.service.Impl.SingerServiceImpl;
+import com.jiuge.songs.service.SingerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SingerController {
 
     @Autowired
-    SingerServiceImpl singerServiceImpl;
+    SingerService singerService;
 
     /**
      * 所有歌手
@@ -24,7 +24,7 @@ public class SingerController {
      */
     @GetMapping("/allsingers")
     public RespEntity findAllSingers(){
-        return singerServiceImpl.findAllSingers();
+        return singerService.findAllSingers();
     }
 
     /**
@@ -34,7 +34,7 @@ public class SingerController {
      */
     @GetMapping("/singers/name")
     public RespEntity findSingersBySingerName(@RequestParam("si_name") String si_name){
-        return singerServiceImpl.findSingersBySingerName(si_name);
+        return singerService.findSingersBySingerName(si_name);
     }
 
     /**
@@ -44,7 +44,7 @@ public class SingerController {
      */
     @GetMapping("/singers/gender")
     public RespEntity findSingerByGender(@RequestParam("gender") String gender){
-        return singerServiceImpl.findSingersByGender(gender);
+        return singerService.findSingersByGender(gender);
 
     }
 }

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiuge.songs.mapper.SingerMapper">
+  <resultMap id="BaseResultMap" type="com.jiuge.songs.bean.Singer">
+    <id column="singer_ID" jdbcType="INTEGER" property="singer_ID" />
+    <result column="si_name" jdbcType="VARCHAR" property="si_name" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="si_image" jdbcType="VARCHAR" property="si_image" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    singer_ID, si_name, gender, si_image, area, label
+  </sql>
+  <select id="selectByExample" parameterType="com.jiuge.songs.bean.SingerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from singer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from singer
+    where singer_ID = #{singer_ID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from singer
+    where singer_ID = #{singer_ID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jiuge.songs.bean.SingerExample">
+    delete from singer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jiuge.songs.bean.Singer">
+    insert into singer (singer_ID, si_name, gender, 
+      si_image, area, label
+      )
+    values (#{singer_ID,jdbcType=INTEGER}, #{si_name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
+      #{si_image,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jiuge.songs.bean.Singer">
+    insert into singer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="singer_ID != null">
+        singer_ID,
+      </if>
+      <if test="si_name != null">
+        si_name,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="si_image != null">
+        si_image,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="label != null">
+        label,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="singer_ID != null">
+        #{singer_ID,jdbcType=INTEGER},
+      </if>
+      <if test="si_name != null">
+        #{si_name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="si_image != null">
+        #{si_image,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jiuge.songs.bean.SingerExample" resultType="java.lang.Long">
+    select count(*) from singer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update singer
+    <set>
+      <if test="record.singer_ID != null">
+        singer_ID = #{record.singer_ID,jdbcType=INTEGER},
+      </if>
+      <if test="record.si_name != null">
+        si_name = #{record.si_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.si_image != null">
+        si_image = #{record.si_image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null">
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.label != null">
+        label = #{record.label,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update singer
+    set singer_ID = #{record.singer_ID,jdbcType=INTEGER},
+      si_name = #{record.si_name,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=VARCHAR},
+      si_image = #{record.si_image,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      label = #{record.label,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jiuge.songs.bean.Singer">
+    update singer
+    <set>
+      <if test="si_name != null">
+        si_name = #{si_name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="si_image != null">
+        si_image = #{si_image,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        label = #{label,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where singer_ID = #{singer_ID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jiuge.songs.bean.Singer">
+    update singer
+    set si_name = #{si_name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      si_image = #{si_image,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      label = #{label,jdbcType=VARCHAR}
+    where singer_ID = #{singer_ID,jdbcType=INTEGER}
+  </update>
+</mapper>

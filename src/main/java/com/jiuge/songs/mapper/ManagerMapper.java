@@ -1,25 +1,31 @@
 package com.jiuge.songs.mapper;
 
 import com.jiuge.songs.bean.Manager;
-import org.apache.ibatis.annotations.*;
+import com.jiuge.songs.bean.ManagerExample;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface ManagerMapper {
+    long countByExample(ManagerExample example);
 
-    @Select("select manager_ID,m_account,m_name,m_password,m_avatar from manager")
-    List<Manager> getAllManager();
+    int deleteByExample(ManagerExample example);
 
-    @Select("select manager_ID,m_account,m_name,m_password m_avatar from manager where manager_ID=#{manager_ID}")
-    Manager getManagerById(int manager_ID);
+    int deleteByPrimaryKey(Integer manager_ID);
 
-    @Delete("delete from manager where manager_ID=#{manager_ID}")
-    int deleteUserById(int user_ID);
+    int insert(Manager record);
 
-    @Options(useGeneratedKeys = true,keyProperty ="manager_ID" )
-    @Insert("insert into manager(m_account,m_name,m_password,m_avatar) values(#{m_account},#{m_name},#{m_password},#{m_avatar})")
-    int insertUser(Manager manager);
+    int insertSelective(Manager record);
 
-    @Update("update manager set m_name=#{m_name},m_password=#{m_password},m_avatar=#{m_avatar} where manager_ID=#{manager_ID}")
-    int updateUser(Manager manager);
+    List<Manager> selectByExample(ManagerExample example);
+
+    Manager selectByPrimaryKey(Integer manager_ID);
+
+    int updateByExampleSelective(@Param("record") Manager record, @Param("example") ManagerExample example);
+
+    int updateByExample(@Param("record") Manager record, @Param("example") ManagerExample example);
+
+    int updateByPrimaryKeySelective(Manager record);
+
+    int updateByPrimaryKey(Manager record);
 }

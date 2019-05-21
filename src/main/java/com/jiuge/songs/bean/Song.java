@@ -1,35 +1,96 @@
 package com.jiuge.songs.bean;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Date;
 
-import java.sql.Time;
-
-/**
- * 歌曲实体类
- * @Author: Cong
- */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Song {
-    private int song_ID;
-    private String s_name;
-    private int singer_ID;
-    private String si_name;
-    private String style;
-    private int album_ID;
-    private String a_name;
-    private String a_image;
-    private String language;
-    private String file;
-    private Time duration;
-    /**
-     * 播放量
-     */
-    private int play;
+    private Integer song_ID;
 
+    private String s_name;
+
+    private Integer singer_ID;
+
+    private String style;
+
+    private Integer album_ID;
+
+    private String language;
+
+    private String file;
+
+    private Integer play;
+
+    private Date duration;
+
+    public Integer getSong_ID() {
+        return song_ID;
+    }
+
+    public void setSong_ID(Integer song_ID) {
+        this.song_ID = song_ID;
+    }
+
+    public String getS_name() {
+        return s_name;
+    }
+
+    public void setS_name(String s_name) {
+        this.s_name = s_name == null ? null : s_name.trim();
+    }
+
+    public Integer getSinger_ID() {
+        return singer_ID;
+    }
+
+    public void setSinger_ID(Integer singer_ID) {
+        this.singer_ID = singer_ID;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style == null ? null : style.trim();
+    }
+
+    public Integer getAlbum_ID() {
+        return album_ID;
+    }
+
+    public void setAlbum_ID(Integer album_ID) {
+        this.album_ID = album_ID;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language == null ? null : language.trim();
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file == null ? null : file.trim();
+    }
+
+    public Integer getPlay() {
+        return play;
+    }
+
+    public void setPlay(Integer play) {
+        this.play = play;
+    }
+
+    public Date getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Date duration) {
+        this.duration = duration;
+    }
 
 }
-

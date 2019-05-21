@@ -1,24 +1,31 @@
 package com.jiuge.songs.mapper;
 
 import com.jiuge.songs.bean.Collection;
-import org.apache.ibatis.annotations.*;
+import com.jiuge.songs.bean.CollectionExample;
+import org.apache.ibatis.annotations.Param;
 
-/**
- * @Author: Cong
- * @Date: 2019/4/18 20:30
- */
+import java.util.List;
+
 public interface CollectionMapper {
+    long countByExample(CollectionExample example);
 
-    @Select("select collection_ID,song_ID,user_ID,c_name from collection where collection_ID=#{collection_ID}")
-    Collection getCollectionById(int collection_ID);
+    int deleteByExample(CollectionExample example);
 
-    @Delete("delete from collection where collection_ID=#{collection_ID}")
-    int deleteCollectionById(int collection_ID);
+    int deleteByPrimaryKey(Integer collection_ID);
 
-    @Options(useGeneratedKeys = true,keyProperty ="collection_ID" )
-    @Insert("insert into collection(song_ID,user_ID,c_name) values(#{song_ID},#{user_ID},#{c_name})")
-    int insertCollection(Collection collection);
+    int insert(Collection record);
 
-    @Update("update language set song_ID=#{song_ID},user_ID=#{user_ID},c_name=#{c_name} where collection_ID=#{collection_ID}")
-    int updateCollection(Collection collection);
+    int insertSelective(Collection record);
+
+    List<Collection> selectByExample(CollectionExample example);
+
+    Collection selectByPrimaryKey(Integer collection_ID);
+
+    int updateByExampleSelective(@Param("record") Collection record, @Param("example") CollectionExample example);
+
+    int updateByExample(@Param("record") Collection record, @Param("example") CollectionExample example);
+
+    int updateByPrimaryKeySelective(Collection record);
+
+    int updateByPrimaryKey(Collection record);
 }

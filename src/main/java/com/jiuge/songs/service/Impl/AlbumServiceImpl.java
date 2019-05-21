@@ -1,6 +1,7 @@
 package com.jiuge.songs.service.Impl;
 
 import com.jiuge.songs.bean.Album;
+import com.jiuge.songs.bean.AlbumExample;
 import com.jiuge.songs.bean.RespCode;
 import com.jiuge.songs.bean.RespEntity;
 import com.jiuge.songs.mapper.AlbumMapper;
@@ -27,9 +28,11 @@ public class AlbumServiceImpl implements AlbumService {
      */
     @Override
     public RespEntity findAllAlbums() {
-        List<Album> albums = albumMapper.getAllAlbum();
+        AlbumExample albumExample = new AlbumExample();
+        List<Album> albums = albumMapper.selectByExample(albumExample);
         return new RespEntity(RespCode.Success,albums);
     }
+
 
     /**
      * 根据专辑名搜索专辑
@@ -38,7 +41,10 @@ public class AlbumServiceImpl implements AlbumService {
      */
     @Override
     public RespEntity findAlbumsByAlbumName(String a_name) {
-        List<Album> albums = albumMapper.getAlbumByName(a_name);
+        AlbumExample albumExample = new AlbumExample();
+        AlbumExample.Criteria criteria = albumExample.createCriteria();
+        criteria.andA_nameLike("%"+a_name+"%");
+        List<Album> albums = albumMapper.selectByExample(albumExample);
         return new RespEntity(RespCode.Success,albums);
     }
 }

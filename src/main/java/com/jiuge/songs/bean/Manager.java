@@ -1,31 +1,21 @@
 package com.jiuge.songs.bean;
 
-/**
- * 管理员
- */
 public class Manager {
-    private int manager_ID;
+    private Integer manager_ID;
+
     private String m_account;
+
     private String m_name;
+
     private String m_password;
+
     private String m_avatar;
 
-    @Override
-    public String toString() {
-        return "Manager{" +
-                "manager_ID=" + manager_ID +
-                ", m_account=" + m_account +
-                ", m_name='" + m_name + '\'' +
-                ", m_password=" + m_password +
-                ", m_avatar='" + m_avatar + '\'' +
-                '}';
-    }
-
-    public int getManager_ID() {
+    public Integer getManager_ID() {
         return manager_ID;
     }
 
-    public void setManager_ID(int manager_ID) {
+    public void setManager_ID(Integer manager_ID) {
         this.manager_ID = manager_ID;
     }
 
@@ -34,7 +24,7 @@ public class Manager {
     }
 
     public void setM_account(String m_account) {
-        this.m_account = m_account;
+        this.m_account = m_account == null ? null : m_account.trim();
     }
 
     public String getM_name() {
@@ -42,7 +32,7 @@ public class Manager {
     }
 
     public void setM_name(String m_name) {
-        this.m_name = m_name;
+        this.m_name = m_name == null ? null : m_name.trim();
     }
 
     public String getM_password() {
@@ -50,7 +40,7 @@ public class Manager {
     }
 
     public void setM_password(String m_password) {
-        this.m_password = m_password;
+        this.m_password = m_password == null ? null : m_password.trim();
     }
 
     public String getM_avatar() {
@@ -58,6 +48,6 @@ public class Manager {
     }
 
     public void setM_avatar(String m_avatar) {
-        this.m_avatar = m_avatar;
+        this.m_avatar = m_avatar == null ? null : m_avatar.trim();
     }
 }

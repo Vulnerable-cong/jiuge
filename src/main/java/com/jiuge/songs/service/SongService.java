@@ -9,38 +9,15 @@ import com.jiuge.songs.bean.RespEntity;
  */
 public interface SongService {
     /**
-     * 搜索所有歌曲
-     * @return
-     */
-    RespEntity findAllSongs(int pageNum);
-
-    /**
-     * 根据歌曲名搜索歌曲
+     * 搜索歌曲，可通过歌名or歌手名or风格or语种搜索
+     * @param pageNum
      * @param s_name
-     * @return
-     */
-    RespEntity findSongsBySongName(String s_name);
-
-    /**
-     * 根据歌手名搜索歌曲
      * @param si_name
-     * @return
-     */
-    RespEntity findSongsBySingerName(String si_name);
-
-    /**
-     * 根据风格搜索歌曲
      * @param style
-     * @return
-     */
-    RespEntity findSongsByStyle(String style);
-
-    /**
-     * 根据语种搜索歌曲
      * @param language
      * @return
      */
-    RespEntity findSongsByLanguage(String language);
+    RespEntity findSongs(int pageNum,String s_name,String si_name,String style,String language);
 
     /**
      * 根据歌曲ID搜索歌曲

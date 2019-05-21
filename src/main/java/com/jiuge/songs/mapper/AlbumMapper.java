@@ -1,80 +1,31 @@
 package com.jiuge.songs.mapper;
 
 import com.jiuge.songs.bean.Album;
-import org.apache.ibatis.annotations.*;
+import com.jiuge.songs.bean.AlbumExample;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-/**
- * 专辑的Mapper类
- */
 public interface AlbumMapper {
+    long countByExample(AlbumExample example);
 
-    /**
-     * 查询所有专辑
-     * @return
-     */
-    @Select("select album.* from album")
-    List<Album> getAllAlbum();
+    int deleteByExample(AlbumExample example);
 
-    /**
-     * 根据专辑名查询专辑，支持模糊查询
-     * @param a_name
-     * @return
-     */
-    @Select("select album.* from album where a_name like CONCAT('%',#{a_name},'%')")
-    List<Album> getAlbumByName(String a_name);
+    int deleteByPrimaryKey(Integer album_ID);
 
-    /**
-     * 根据专辑ID查询专辑
-     * @param album_ID
-     * @return
-     */
-    @Select("select album.* from album where a_name=#{a_name}")
-    Album getAlbumById(int album_ID);
+    int insert(Album record);
 
-    /**
-     * 根据语种查询专辑
-     * @param a_language
-     * @return
-     */
-    @Select("select album.* from album where a_language=#{a_language}")
-    List<Album> getAlbumByLanguage(String a_language);
+    int insertSelective(Album record);
 
-    /**
-     * 根据风格查询专辑
-     * @param a_style
-     * @return
-     */
-    @Select("select album.* from album where a_style=#{a_style}")
-    List<Album> getAlbumByStyle(String a_style);
+    List<Album> selectByExample(AlbumExample example);
 
+    Album selectByPrimaryKey(Integer album_ID);
 
+    int updateByExampleSelective(@Param("record") Album record, @Param("example") AlbumExample example);
 
-    /**
-     * 根据专辑ID删除专辑
-     * @param album_ID
-     * @return
-     */
-    @Delete("delete from album where album_ID=#{album_ID}")
-    int deleteAlbumById(int album_ID);
+    int updateByExample(@Param("record") Album record, @Param("example") AlbumExample example);
 
-    /**
-     * 增加专辑
-     * @param album
-     * @return
-     */
-    @Options(useGeneratedKeys = true,keyProperty ="album_ID" )
-    @Insert("insert into album(a_name,a_image,a_language,a_style)\n" +
-            "values(#{a_name},#{a_image},#{a_language},#{a_style})")
-    int insertAlbum(Album album);
+    int updateByPrimaryKeySelective(Album record);
 
-    /**
-     * 修改专辑信息
-     * @param album
-     * @return
-     */
-    @Update("update album set a_name=#{a_name},a_image=#{a_image}\n" +
-            ",a_language=#{a_language},a_style=#{a_style} where album_ID=#{album_ID}")
-    int updateAlbum(Album album);
+    int updateByPrimaryKey(Album record);
 }

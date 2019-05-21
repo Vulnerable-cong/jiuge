@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiuge.songs.mapper.SongMapper">
+  <resultMap id="BaseResultMap" type="com.jiuge.songs.bean.Song">
+    <id column="song_ID" jdbcType="INTEGER" property="song_ID" />
+    <result column="s_name" jdbcType="VARCHAR" property="s_name" />
+    <result column="singer_ID" jdbcType="INTEGER" property="singer_ID" />
+    <result column="style" jdbcType="VARCHAR" property="style" />
+    <result column="album_ID" jdbcType="INTEGER" property="album_ID" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="file" jdbcType="VARCHAR" property="file" />
+    <result column="play" jdbcType="INTEGER" property="play" />
+    <result column="duration" jdbcType="TIME" property="duration" />
+  </resultMap>
+
+  <resultMap id="songResultMap" type="com.jiuge.songs.bean.SongVO">
+    <id column="song_ID" jdbcType="INTEGER" property="song_ID" />
+    <result column="s_name" jdbcType="VARCHAR" property="s_name" />
+    <result column="singer_ID" jdbcType="INTEGER" property="singer_ID" />
+    <result column="si_name" jdbcType="VARCHAR" property="si_name" />
+    <result column="style" jdbcType="VARCHAR" property="style" />
+    <result column="album_ID" jdbcType="INTEGER" property="album_ID" />
+    <result column="a_name" jdbcType="VARCHAR" property="a_name" />
+    <result column="a_image" jdbcType="VARCHAR" property="a_image" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="file" jdbcType="VARCHAR" property="file" />
+    <result column="play" jdbcType="INTEGER" property="play" />
+    <result column="duration" jdbcType="TIME" javaType="java.sql.Time" property="duration" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    song_ID, s_name, singer_ID, style, album_ID, language, file, play, duration
+  </sql>
+  <select id="selectByExample" parameterType="com.jiuge.songs.bean.SongExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from song
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from song
+    where song_ID = #{song_ID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from song
+    where song_ID = #{song_ID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jiuge.songs.bean.SongExample">
+    delete from song
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jiuge.songs.bean.Song">
+    insert into song (song_ID, s_name, singer_ID, 
+      style, album_ID, language, 
+      file, play, duration)
+    values (#{song_ID,jdbcType=INTEGER}, #{s_name,jdbcType=VARCHAR}, #{singer_ID,jdbcType=INTEGER}, 
+      #{style,jdbcType=VARCHAR}, #{album_ID,jdbcType=INTEGER}, #{language,jdbcType=VARCHAR}, 
+      #{file,jdbcType=VARCHAR}, #{play,jdbcType=INTEGER}, #{duration,jdbcType=TIME})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jiuge.songs.bean.Song">
+    insert into song
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="song_ID != null">
+        song_ID,
+      </if>
+      <if test="s_name != null">
+        s_name,
+      </if>
+      <if test="singer_ID != null">
+        singer_ID,
+      </if>
+      <if test="style != null">
+        style,
+      </if>
+      <if test="album_ID != null">
+        album_ID,
+      </if>
+      <if test="language != null">
+        language,
+      </if>
+      <if test="file != null">
+        file,
+      </if>
+      <if test="play != null">
+        play,
+      </if>
+      <if test="duration != null">
+        duration,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="song_ID != null">
+        #{song_ID,jdbcType=INTEGER},
+      </if>
+      <if test="s_name != null">
+        #{s_name,jdbcType=VARCHAR},
+      </if>
+      <if test="singer_ID != null">
+        #{singer_ID,jdbcType=INTEGER},
+      </if>
+      <if test="style != null">
+        #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="album_ID != null">
+        #{album_ID,jdbcType=INTEGER},
+      </if>
+      <if test="language != null">
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="file != null">
+        #{file,jdbcType=VARCHAR},
+      </if>
+      <if test="play != null">
+        #{play,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=TIME},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jiuge.songs.bean.SongExample" resultType="java.lang.Long">
+    select count(*) from song
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update song
+    <set>
+      <if test="record.song_ID != null">
+        song_ID = #{record.song_ID,jdbcType=INTEGER},
+      </if>
+      <if test="record.s_name != null">
+        s_name = #{record.s_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.singer_ID != null">
+        singer_ID = #{record.singer_ID,jdbcType=INTEGER},
+      </if>
+      <if test="record.style != null">
+        style = #{record.style,jdbcType=VARCHAR},
+      </if>
+      <if test="record.album_ID != null">
+        album_ID = #{record.album_ID,jdbcType=INTEGER},
+      </if>
+      <if test="record.language != null">
+        language = #{record.language,jdbcType=VARCHAR},
+      </if>
+      <if test="record.file != null">
+        file = #{record.file,jdbcType=VARCHAR},
+      </if>
+      <if test="record.play != null">
+        play = #{record.play,jdbcType=INTEGER},
+      </if>
+      <if test="record.duration != null">
+        duration = #{record.duration,jdbcType=TIME},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update song
+    set song_ID = #{record.song_ID,jdbcType=INTEGER},
+      s_name = #{record.s_name,jdbcType=VARCHAR},
+      singer_ID = #{record.singer_ID,jdbcType=INTEGER},
+      style = #{record.style,jdbcType=VARCHAR},
+      album_ID = #{record.album_ID,jdbcType=INTEGER},
+      language = #{record.language,jdbcType=VARCHAR},
+      file = #{record.file,jdbcType=VARCHAR},
+      play = #{record.play,jdbcType=INTEGER},
+      duration = #{record.duration,jdbcType=TIME}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jiuge.songs.bean.Song">
+    update song
+    <set>
+      <if test="s_name != null">
+        s_name = #{s_name,jdbcType=VARCHAR},
+      </if>
+      <if test="singer_ID != null">
+        singer_ID = #{singer_ID,jdbcType=INTEGER},
+      </if>
+      <if test="style != null">
+        style = #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="album_ID != null">
+        album_ID = #{album_ID,jdbcType=INTEGER},
+      </if>
+      <if test="language != null">
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="file != null">
+        file = #{file,jdbcType=VARCHAR},
+      </if>
+      <if test="play != null">
+        play = #{play,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        duration = #{duration,jdbcType=TIME},
+      </if>
+    </set>
+    where song_ID = #{song_ID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jiuge.songs.bean.Song">
+    update song
+    set s_name = #{s_name,jdbcType=VARCHAR},
+      singer_ID = #{singer_ID,jdbcType=INTEGER},
+      style = #{style,jdbcType=VARCHAR},
+      album_ID = #{album_ID,jdbcType=INTEGER},
+      language = #{language,jdbcType=VARCHAR},
+      file = #{file,jdbcType=VARCHAR},
+      play = #{play,jdbcType=INTEGER},
+      duration = #{duration,jdbcType=TIME}
+    where song_ID = #{song_ID,jdbcType=INTEGER}
+  </update>
+
+
+  <!-- 以下为自己写的多表查询-->
+  <select id="getSongs" resultMap="songResultMap">
+    select t.* , album.a_name, album.a_image
+        from (select song.song_ID,song.s_name,song.singer_ID,singer.si_name,song.style,song.language,song.play,song.duration,song.album_ID
+        from song Left outer join singer
+        on song.singer_ID = singer.singer_ID )as t Left outer join album
+        on t.album_ID = album.album_ID
+        <where >
+          <choose>
+            <when test="s_name != null and s_name != '' ">
+              s_name like CONCAT('%',#{s_name},'%')
+            </when>
+            <when test="si_name != null and si_name != '' ">
+              si_name like CONCAT('%',#{si_name},'%')
+            </when>
+            <when test="style != null and style != '' ">
+              style = #{style}
+            </when>
+            <when test="language != null and language != '' ">
+              language = #{language}
+            </when>
+            <otherwise>
+
+            </otherwise>
+          </choose>
+        </where >
+  </select>
+
+  <select id="getSongById" resultMap="songResultMap">
+    select t.* , album.a_name, album.a_image
+        from (select song.song_ID,song.s_name,song.singer_ID,singer.si_name,song.style,song.language,song.play,song.duration,song.album_ID
+        from song Left outer join singer
+        on song.singer_ID = singer.singer_ID )as t Left outer join album
+        on t.album_ID = album.album_ID
+        where singer_ID=#{singer_ID}
+  </select>
+  
+  <select id="getSongFile" resultType="String">
+    select song.file from song where song_ID=#{song_ID}
+  </select>
+
+  <select id="getSongPlay" resultType="int">
+    select song.play from song where song_ID=#{song_ID}
+  </select>
+
+
+</mapper>

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.jiuge.songs.bean.RespCode;
 import com.jiuge.songs.bean.RespEntity;
 import com.jiuge.songs.bean.Song;
+import com.jiuge.songs.bean.SongVO;
 import com.jiuge.songs.mapper.SongMapper;
 import com.jiuge.songs.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,75 +28,36 @@ public class SongServiceImpl implements SongService {
     SongMapper songMapper;
 
     /**
-     * 搜索所有歌曲 功能,支持分页查询
-     * @return
-     */
-    @Override
-    public RespEntity findAllSongs(int pageNum) {
-        PageHelper.startPage(pageNum, 10);
-        List<Song> songs = songMapper.getAllSongs();
-        PageInfo<Song> songPageInfo = new PageInfo<Song>(songs);
-        return new RespEntity(RespCode.Success,songPageInfo);
-    }
-
-    /**
-     * 根据歌名搜索歌曲 功能
+     * 搜索歌曲，通过歌名or歌手名or风格or语种搜索
+     * @param pageNum
      * @param s_name
-     * @return
-     */
-    @Override
-    public RespEntity findSongsBySongName(String s_name) {
-        List<Song> songs = songMapper.getSongsByName(s_name);
-        return new RespEntity(RespCode.Success,songs);
-    }
-
-    /**
-     * 根据歌手名搜索歌曲 功能
      * @param si_name
-     * @return
-     */
-    @Override
-    public RespEntity findSongsBySingerName(String si_name) {
-        List<Song> songs = songMapper.getSongsBySingerName(si_name);
-        return new RespEntity(RespCode.Success,songs);
-    }
-
-    /**
-     * 根据风格搜索歌曲 功能
      * @param style
-     * @return
-     */
-    @Override
-    public RespEntity findSongsByStyle(String style) {
-        List<Song> songs = songMapper.getSongsByStyle(style);
-        return new RespEntity(RespCode.Success,songs);
-    }
-
-    /**
-     * 根据语种搜索歌曲 功能
      * @param language
      * @return
      */
     @Override
-    public RespEntity findSongsByLanguage(String language) {
-        List<Song> songs = songMapper.getSongByLanguage(language);
-        return new RespEntity(RespCode.Success,songs);
+    public RespEntity findSongs(int pageNum, String s_name, String si_name, String style, String language) {
+        PageHelper.startPage(pageNum, 10);
+        List<SongVO> songs = songMapper.getSongs(s_name,si_name,style,language);
+        PageInfo<SongVO> songPageInfo = new PageInfo<>(songs);
+        return new RespEntity(RespCode.Success,songPageInfo);
     }
 
     /**
-     * 根据ID精准搜索歌曲 功能
+     * 根据ID精准搜索歌曲
      * @param song_ID
      * @return
      */
     @Override
     public RespEntity findSongById(int song_ID) {
-        Song song = songMapper.getSongById(song_ID);
+        SongVO song = songMapper.getSongById(song_ID);
         return new RespEntity(RespCode.Success,song);
     }
 
     /**
      * 根据歌曲ID找到歌曲文件名
-     * 播放时发送的执行的操作
+     * 播放时发送请求执行的操作
      * @param song_ID
      * @return
      */
@@ -105,6 +67,21 @@ public class SongServiceImpl implements SongService {
         return new RespEntity(RespCode.Success,file);
     }
 
+//    /**
+//     * 根据歌曲ID找到歌曲信息
+//     * 可只需要文件名，不想传输太多无用的东西
+//     * @param song_ID
+//     * @return
+//     */
+//    @Override
+//    public RespEntity findSongFile(int song_ID) {
+//        SongExample songExample = new SongExample();
+//        SongExample.Criteria criteria = songExample.createCriteria();
+//        criteria.andSong_IDEqualTo(song_ID);
+//        List<Song> file = songMapper.selectByExample(songExample);
+//        return new RespEntity(RespCode.Success,file);
+//    }
+
     /**
      * 增加播放量
      * 每次加一
@@ -113,9 +90,17 @@ public class SongServiceImpl implements SongService {
      */
     @Override
     public RespEntity increasePlay(int song_ID) {
-        int play = songMapper.getSongPlay(song_ID);
-        play++;
-        songMapper.updateSongPlay(song_ID,play);
+        int play;
+        try {
+            play = songMapper.getSongPlay(song_ID);
+            play++;
+        }catch (Exception e){
+            return new RespEntity(RespCode.Fail);
+        }
+        Song song = new Song();
+        song.setSong_ID(song_ID);
+        song.setPlay(play);
+        songMapper.updateByPrimaryKeySelective(song);
         return new RespEntity(RespCode.Success);
     }
 
@@ -125,12 +110,11 @@ public class SongServiceImpl implements SongService {
      */
     @Override
     public RespEntity indexSong() {
-        List<Song> songs = new ArrayList<Song>();
+        List<SongVO> songs = new ArrayList<>();
         int[] id = {1,9,13,16,18,20};
         for (int i = 0; i < INDEXSONGNUM; i++) {
             songs.add(songMapper.getSongById(id[i]));
         }
         return new RespEntity(RespCode.Success,songs);
     }
-
 }

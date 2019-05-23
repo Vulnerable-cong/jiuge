@@ -30,7 +30,7 @@ public class SongController {
     }
 
     /**
-     * 根据歌曲名搜索歌曲，支持模糊查询
+     * 根据歌曲名搜索歌曲，支持模糊查询、分页
      * @param pageNum
      * @param s_name
      * @return
@@ -41,7 +41,7 @@ public class SongController {
     }
 
     /**
-     * 根据歌手名搜索歌曲，支持模糊查询
+     * 根据歌手名搜索歌曲，支持模糊查询、分页
      * @param pageNum
      * @param si_name
      * @return
@@ -62,7 +62,7 @@ public class SongController {
     }
 
     /**
-     * 根据风格分类查找歌曲
+     * 根据风格分类查找歌曲，支持分页
      * @param pageNum
      * @param style
      * @return
@@ -73,7 +73,7 @@ public class SongController {
     }
 
     /**
-     * 根据语种分类查找歌曲
+     * 根据语种分类查找歌曲，支持分页
      * @param pageNum
      * @param language
      * @return

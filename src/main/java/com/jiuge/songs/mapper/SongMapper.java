@@ -55,5 +55,10 @@ public interface SongMapper {
      */
     String getSongFile(int song_ID);
 
+    /**
+     * 拿到指定歌曲的播放量
+     * @param song_ID
+     * @return
+     */
     int getSongPlay(int song_ID);
 }

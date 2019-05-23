@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Time;
+
 /**
  * 歌单里的歌曲信息的特别的类
  * @Author: Cong
@@ -57,4 +59,14 @@ public class SongsInSheet {
      * 专辑名
      */
     private String a_name;
+
+    /**
+     * 歌曲时长
+     */
+    private Time duration;
+
+    /**
+     * 专辑图
+     */
+    private String a_image;
 }

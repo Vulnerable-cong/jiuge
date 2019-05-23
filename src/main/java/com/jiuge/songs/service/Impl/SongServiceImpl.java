@@ -10,6 +10,7 @@ import com.jiuge.songs.mapper.SongMapper;
 import com.jiuge.songs.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,7 @@ public class SongServiceImpl implements SongService {
 //        return new RespEntity(RespCode.Success,file);
 //    }
 
+
     /**
      * 增加播放量
      * 每次加一
@@ -89,14 +91,10 @@ public class SongServiceImpl implements SongService {
      * @return
      */
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public RespEntity increasePlay(int song_ID) {
-        int play;
-        try {
-            play = songMapper.getSongPlay(song_ID);
-            play++;
-        }catch (Exception e){
-            return new RespEntity(RespCode.Fail);
-        }
+        int play = songMapper.getSongPlay(song_ID);
+        play++;
         Song song = new Song();
         song.setSong_ID(song_ID);
         song.setPlay(play);

@@ -12,10 +12,8 @@ public enum RespCode {
     Fail(-1, "请求失败"),
     //状态码为-2则代表用户不存在
     NoUser(-2,"用户不存在"),
-    //
+    //状态码为-3则代表密码错误
     PwdError(-3,"密码错误");
-
-
 
     private int code;
     private String msg;

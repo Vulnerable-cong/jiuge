@@ -63,8 +63,8 @@ public class User {
         this.createtime = createtime;
     }
 
-    public User(String u_name, String u_password, Date createtime) {
-        this.u_name = u_name;
+    public User(String u_account, String u_password, Date createtime) {
+        this.u_account = u_account;
         this.u_password = u_password;
         this.createtime = createtime;
     }

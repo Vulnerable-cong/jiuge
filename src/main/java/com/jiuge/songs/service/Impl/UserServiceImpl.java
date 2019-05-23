@@ -46,11 +46,13 @@ public class UserServiceImpl implements UserService {
 
         }
         if (u == null) {
+            //返回没有此用户的消息
             return new RespEntity(RespCode.NoUser);
         } else if (u.get(0).getU_password().equals(password)) {
             //成功就把这个用户的数据都传输到前台
             return new RespEntity(RespCode.Success, u);
         } else {
+            //返回密码错误的消息
             return new RespEntity(RespCode.PwdError);
         }
     }

@@ -6,12 +6,28 @@
     <result column="sh_name" jdbcType="VARCHAR" property="sh_name" />
     <result column="user_ID" jdbcType="INTEGER" property="user_ID" />
     <result column="play" jdbcType="INTEGER" property="play" />
-    <result column="createtime" jdbcType="DATE" property="createtime" />
+    <result column="createtime" jdbcType="DATE" javaType="java.util.Date" property="createtime" />
     <result column="language" jdbcType="VARCHAR" property="language" />
     <result column="style" jdbcType="VARCHAR" property="style" />
     <result column="mood" jdbcType="VARCHAR" property="mood" />
     <result column="scene" jdbcType="VARCHAR" property="scene" />
     <result column="sh_image" jdbcType="VARCHAR" property="sh_image" />
+  </resultMap>
+
+  <resultMap id="SISResultMap" type="com.jiuge.songs.bean.SongsInSheet">
+    <id column="song_ID" jdbcType="INTEGER" property="song_ID" />
+    <result column="sheet_ID" jdbcType="INTEGER" property="sheet_ID" />
+    <result column="sh_name" jdbcType="VARCHAR" property="sh_name" />
+    <result column="s_name" jdbcType="VARCHAR" property="s_name" />
+    <result column="singer_ID" jdbcType="INTEGER" property="singer_ID" />
+    <result column="si_name" jdbcType="VARCHAR" property="si_name" />
+    <result column="style" jdbcType="VARCHAR" property="style" />
+    <result column="album_ID" jdbcType="INTEGER" property="album_ID" />
+    <result column="a_name" jdbcType="VARCHAR" property="a_name" />
+    <result column="a_image" jdbcType="VARCHAR" property="a_image" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="file" jdbcType="VARCHAR" property="file" />
+    <result column="duration" jdbcType="TIME" javaType="java.sql.Time" property="duration" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -287,4 +303,31 @@
       sh_image = #{sh_image,jdbcType=VARCHAR}
     where sheet_ID = #{sheet_ID,jdbcType=INTEGER}
   </update>
+
+  <select id="getSongsInSheet" resultMap="SISResultMap">
+    select sheet.sheet_ID,sheet.sh_name,a.*
+        from (select t.* , album.a_name, album.a_image
+        from (select song.* ,singer.si_name
+        from song Left outer join singer
+        on song.singer_ID = singer.singer_ID )as t Left outer join album
+        on t.album_ID = album.album_ID) as a,sheet,sheet_song
+        where sheet_song.sheet_ID = sheet.sheet_ID and sheet_song.song_ID = a.song_ID
+        and sheet.sheet_ID = #{sheet_ID}
+  </select>
+  
+  <select id="getSheetPlay">
+    select sheet.play from sheet where sheet_ID=#{sheet_ID}
+  </select>
+  
+  <insert id="insertSongsToSheet" >
+    insert into sheet_song (sheet_ID,song_ID) value(#{sheet_ID},#{song_ID})
+  </insert>
+  
+  <delete id="deleteAllSongInSheet">
+    delete from sheet_song where sheet_ID=#{sheet_ID}
+  </delete>
+  
+  <delete id="deleteSIS">
+    delete from sheet_song where sheet_ID=#{sheet_ID} and song_ID=#{song_ID}
+  </delete>
 </mapper>

@@ -1,5 +1,7 @@
 package com.jiuge.songs.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Sheet {
@@ -11,6 +13,7 @@ public class Sheet {
 
     private Integer play;
 
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date createtime;
 
     private String language;
@@ -102,4 +105,30 @@ public class Sheet {
     public void setSh_image(String sh_image) {
         this.sh_image = sh_image == null ? null : sh_image.trim();
     }
+
+    public Sheet() {
+    }
+
+    public Sheet(String sh_name, Integer user_ID, Date createtime, String language, String style, String mood, String scene, String sh_image) {
+        this.sh_name = sh_name;
+        this.user_ID = user_ID;
+        this.createtime = createtime;
+        this.language = language;
+        this.style = style;
+        this.mood = mood;
+        this.scene = scene;
+        this.sh_image = sh_image;
+    }
+
+
+    public Sheet(Integer sheet_ID, String sh_name, String language, String style, String mood, String scene, String sh_image) {
+        this.sheet_ID = sheet_ID;
+        this.sh_name = sh_name;
+        this.language = language;
+        this.style = style;
+        this.mood = mood;
+        this.scene = scene;
+        this.sh_image = sh_image;
+    }
+
 }

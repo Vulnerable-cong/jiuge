@@ -31,7 +31,7 @@ public class SheetController {
      * @param pageNum
      * @return
      */
-    @GetMapping("/allsheets")
+    @GetMapping("/sheets")
     public RespEntity findAllSheet(@RequestParam(defaultValue = "1") int pageNum){
         return sheetService.findAllSheet(pageNum);
     }
@@ -42,7 +42,7 @@ public class SheetController {
      * @param pageNum
      * @return
      */
-    @GetMapping("/sheets/name")
+    @GetMapping(value = "/sheets",params ="sh_name" )
     public RespEntity findSheetsByName(@RequestParam("sh_name")String sh_name,@RequestParam(defaultValue = "1") int pageNum){
         return sheetService.findSheetsByName(sh_name,pageNum);
     }
@@ -53,7 +53,7 @@ public class SheetController {
      * @param pageNum
      * @return
      */
-    @GetMapping("/sheets/language")
+    @GetMapping(value = "/sheets",params = "language")
     public RespEntity findSheetsByLanguage(@RequestParam("language")String language,@RequestParam(defaultValue = "1") int pageNum){
         return sheetService.findSheetsByLanguage(language,pageNum);
     }
@@ -64,7 +64,7 @@ public class SheetController {
      * @param pageNum
      * @return
      */
-    @GetMapping("/sheets/style")
+    @GetMapping(value = "/sheets",params = "style")
     public RespEntity findSheetsByStyle(@RequestParam("style")String style,@RequestParam(defaultValue = "1") int pageNum){
         return sheetService.findSheetsByStyle(style,pageNum);
     }
@@ -75,7 +75,7 @@ public class SheetController {
      * @param pageNum
      * @return
      */
-    @GetMapping("/sheets/mood")
+    @GetMapping(value = "/sheets",params = "mood")
     public RespEntity findSheetsByMood(@RequestParam("mood")String mood,@RequestParam(defaultValue = "1") int pageNum){
         return sheetService.findSheetsByMood(mood,pageNum);
     }
@@ -86,7 +86,7 @@ public class SheetController {
      * @param pageNum
      * @return
      */
-    @GetMapping("/sheets/scene")
+    @GetMapping(value = "/sheets",params = "scene")
     public RespEntity findSheetsByScene(@RequestParam("scene")String scene,@RequestParam(defaultValue = "1") int pageNum){
         return sheetService.findSheetByScene(scene,pageNum);
     }
@@ -102,7 +102,7 @@ public class SheetController {
      * @param sh_image
      * @return
      */
-    @PostMapping("/sheet")
+    @PostMapping("/sheet/new")
     public RespEntity newSheet(@RequestParam("sh_name") String sh_name,@RequestParam("user_ID") int user_ID,
                                @RequestParam("language") String language,@RequestParam("style") String style,
                                @RequestParam("language") String mood,@RequestParam("language") String scene,
@@ -111,22 +111,47 @@ public class SheetController {
         return sheetService.newSheet(sh_name,user_ID,language,style,mood,scene,sh_image);
     }
 
-//    @GetMapping("/sheet/play")
-//    public RespEntity playInSheet(@RequestParam("sheet_ID") int sheet_ID,@RequestParam("song_ID") int song_ID){
-//        return sheetServiceImpl.playInSheet(sheet_ID,song_ID);
-//    }
-
+    /**
+     * 添加歌曲进歌单
+     * @param sheet_ID
+     * @param song_ID
+     * @return
+     */
+    @PostMapping("/sheet/addsong")
+    public RespEntity addSongToSheet(@RequestParam("sheet_ID")int sheet_ID, @RequestParam("song_ID")int song_ID){
+        return sheetService.addSongToSheet(sheet_ID,song_ID);
+    }
 
     /**
      * 增加歌单播放量
      * 每次加一
-     * 本质是修改数据库的数据，故使用put请求
      * @param sheet_ID
      * @return
      */
-    @PutMapping("/sheet/increase")
+    @PostMapping("/sheet/increase")
     public RespEntity increasePlay(@RequestParam("sheet_ID") int sheet_ID){
         return sheetService.increasePlay(sheet_ID);
+    }
+
+    /**
+     * 根据歌单ID删除歌单
+     * @param sheet_ID
+     * @return
+     */
+    @DeleteMapping("/sheet/delete")
+    public RespEntity deleteSheet(@RequestParam("sheet_ID") int sheet_ID){
+        return sheetService.deleteSheet(sheet_ID);
+    }
+
+    /**
+     * 删除歌单里的某一首歌
+     * @param sheet_ID
+     * @param song_ID
+     * @return
+     */
+    @DeleteMapping("/sheet/song/delete")
+    public RespEntity deleteSIS(@RequestParam("sheet_ID") int sheet_ID,@RequestParam("song_ID") int song_ID){
+        return sheetService.deleteSongOfSheet(sheet_ID,song_ID);
     }
 
 }

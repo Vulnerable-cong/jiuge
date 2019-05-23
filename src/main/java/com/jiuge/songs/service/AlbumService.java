@@ -22,4 +22,12 @@ public interface AlbumService {
      */
     RespEntity findAlbumsByAlbumName(String a_name);
 
+    /**
+     * 找到专辑里的所有歌
+     * @param album_ID
+     * @return
+     */
+    RespEntity findSongsByAlbum(int album_ID);
+
+
 }

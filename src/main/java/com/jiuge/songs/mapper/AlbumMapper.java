@@ -2,6 +2,7 @@ package com.jiuge.songs.mapper;
 
 import com.jiuge.songs.bean.Album;
 import com.jiuge.songs.bean.AlbumExample;
+import com.jiuge.songs.bean.SongVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -28,4 +29,11 @@ public interface AlbumMapper {
     int updateByPrimaryKeySelective(Album record);
 
     int updateByPrimaryKey(Album record);
+
+    /**
+     * 获取专辑里的所有歌曲
+     * @param akbum_ID
+     * @return
+     */
+    List<SongVO> getSongsByAlbum(int akbum_ID);
 }

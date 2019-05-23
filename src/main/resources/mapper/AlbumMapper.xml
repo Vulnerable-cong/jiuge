@@ -8,6 +8,21 @@
     <result column="a_language" jdbcType="VARCHAR" property="a_language" />
     <result column="a_style" jdbcType="VARCHAR" property="a_style" />
   </resultMap>
+
+  <resultMap id="songResultMap" type="com.jiuge.songs.bean.SongVO">
+    <id column="song_ID" jdbcType="INTEGER" property="song_ID" />
+    <result column="s_name" jdbcType="VARCHAR" property="s_name" />
+    <result column="singer_ID" jdbcType="INTEGER" property="singer_ID" />
+    <result column="si_name" jdbcType="VARCHAR" property="si_name" />
+    <result column="style" jdbcType="VARCHAR" property="style" />
+    <result column="album_ID" jdbcType="INTEGER" property="album_ID" />
+    <result column="a_name" jdbcType="VARCHAR" property="a_name" />
+    <result column="a_image" jdbcType="VARCHAR" property="a_image" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="file" jdbcType="VARCHAR" property="file" />
+    <result column="play" jdbcType="INTEGER" property="play" />
+    <result column="duration" jdbcType="TIME" javaType="java.sql.Time" property="duration" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -208,4 +223,13 @@
       a_style = #{a_style,jdbcType=VARCHAR}
     where album_ID = #{album_ID,jdbcType=INTEGER}
   </update>
+
+  <select id="getSongsByAlbum" resultMap="songResultMap">
+    select t.* , album.a_name, album.a_image
+        from (select song.song_ID,song.s_name,song.singer_ID,singer.si_name,song.style,song.language,song.play,song.duration,song.album_ID
+        from song Left outer join singer
+        on song.singer_ID = singer.singer_ID )as t Left outer join album
+        on t.album_ID = album.album_ID
+        where album_ID = #{album_ID}
+  </select>
 </mapper>

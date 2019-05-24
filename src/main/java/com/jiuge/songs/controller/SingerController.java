@@ -4,6 +4,7 @@ import com.jiuge.songs.bean.RespEntity;
 import com.jiuge.songs.service.SingerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,9 +23,9 @@ public class SingerController {
      * 所有歌手
      * @return
      */
-    @GetMapping("/allsingers")
-    public RespEntity findAllSingers(){
-        return singerService.findAllSingers();
+    @GetMapping("/singers")
+    public RespEntity findAllSingers(@RequestParam(defaultValue = "1") int pageNum){
+        return singerService.findAllSingers(pageNum);
     }
 
     /**
@@ -32,19 +33,22 @@ public class SingerController {
      * @param si_name
      * @return
      */
-    @GetMapping("/singers/name")
-    public RespEntity findSingersBySingerName(@RequestParam("si_name") String si_name){
-        return singerService.findSingersBySingerName(si_name);
+    @GetMapping(value = "/singers",params = "si_name")
+    public RespEntity findSingersBySingerName(@RequestParam(defaultValue = "1") int pageNum,@RequestParam("si_name") String si_name){
+        return singerService.findSingersBySiN(pageNum,si_name);
     }
 
     /**
-     * 根据性别分类查找歌手
+     * 根据三种条件查找歌手
+     * @param pageNum
      * @param gender
+     * @param area
+     * @param label
      * @return
      */
-    @GetMapping("/singers/gender")
-    public RespEntity findSingerByGender(@RequestParam("gender") String gender){
-        return singerService.findSingersByGender(gender);
+    @GetMapping("/singers/gender={gender}&area={area}&label={label}")
+    public RespEntity findSingerByExample(@RequestParam(defaultValue = "1") int pageNum, @PathVariable String gender, @PathVariable String area, @PathVariable String label){
+        return singerService.findSingersByExample(pageNum,gender,area,label);
 
     }
 }

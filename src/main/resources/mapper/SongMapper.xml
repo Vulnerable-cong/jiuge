@@ -314,6 +314,7 @@
             </otherwise>
           </choose>
         </where >
+        ORDER BY play DESC
   </select>
 
   <select id="getSongById" resultMap="songResultMap">
@@ -322,7 +323,8 @@
         from song Left outer join singer
         on song.singer_ID = singer.singer_ID )as t Left outer join album
         on t.album_ID = album.album_ID
-        where singer_ID=#{singer_ID}
+        where song_ID=#{song_ID}
+        ORDER BY play DESC
   </select>
   
   <select id="getSongFile" resultType="String">

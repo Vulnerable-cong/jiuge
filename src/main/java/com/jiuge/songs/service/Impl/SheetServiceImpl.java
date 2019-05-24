@@ -49,11 +49,14 @@ public class SheetServiceImpl implements SheetService {
     /**
      * 查询所有歌单
      * @param pageNum
+     * @param order
      * @return
      */
     @Override
-    public RespEntity findAllSheet(int pageNum) {
+    public RespEntity findAllSheet(int pageNum,String order) {
+        String str = order+" desc";
         SheetExample sheetExample = new SheetExample();
+        sheetExample.setOrderByClause(str);
         return find(pageNum,sheetExample);
     }
 
@@ -61,11 +64,14 @@ public class SheetServiceImpl implements SheetService {
      * 根据歌单名查询歌单
      * @param sh_name
      * @param pageNum
+     * @param order
      * @return
      */
     @Override
-    public RespEntity findSheetsByName(String sh_name, int pageNum) {
+    public RespEntity findSheetsByName(String sh_name, int pageNum,String order) {
+        String str = order+" desc";
         SheetExample sheetExample = new SheetExample();
+        sheetExample.setOrderByClause(str);
         SheetExample.Criteria criteria = sheetExample.createCriteria();
         criteria.andSh_nameLike("%" + sh_name + "%");
         return find(pageNum,sheetExample);
@@ -75,11 +81,14 @@ public class SheetServiceImpl implements SheetService {
      * 根据语种标签查询歌单
      * @param language
      * @param pageNum
+     * @param order
      * @return
      */
     @Override
-    public RespEntity findSheetsByLanguage(String language, int pageNum) {
+    public RespEntity findSheetsByLanguage(String language, int pageNum,String order) {
+        String str = order+" desc";
         SheetExample sheetExample = new SheetExample();
+        sheetExample.setOrderByClause(str);
         SheetExample.Criteria criteria = sheetExample.createCriteria();
         criteria.andLanguageEqualTo(language);
         return find(pageNum,sheetExample);
@@ -89,11 +98,14 @@ public class SheetServiceImpl implements SheetService {
      * 根据风格标签查询歌单
      * @param style
      * @param pageNum
+     * @param order
      * @return
      */
     @Override
-    public RespEntity findSheetsByStyle(String style, int pageNum) {
+    public RespEntity findSheetsByStyle(String style, int pageNum,String order) {
+        String str = order+" desc";
         SheetExample sheetExample = new SheetExample();
+        sheetExample.setOrderByClause(str);
         SheetExample.Criteria criteria = sheetExample.createCriteria();
         criteria.andStyleEqualTo(style);
         return find(pageNum,sheetExample);
@@ -103,11 +115,14 @@ public class SheetServiceImpl implements SheetService {
      * 根据心情标签查询歌单
      * @param mood
      * @param pageNum
+     * @param order
      * @return
      */
     @Override
-    public RespEntity findSheetsByMood(String mood, int pageNum) {
+    public RespEntity findSheetsByMood(String mood, int pageNum,String order) {
+        String str = order+" desc";
         SheetExample sheetExample = new SheetExample();
+        sheetExample.setOrderByClause(str);
         SheetExample.Criteria criteria = sheetExample.createCriteria();
         criteria.andMoodEqualTo(mood);
         return find(pageNum,sheetExample);
@@ -117,11 +132,14 @@ public class SheetServiceImpl implements SheetService {
      * 根据场景标签查询歌单
      * @param scene
      * @param pageNum
+     * @param order
      * @return
      */
     @Override
-    public RespEntity findSheetByScene(String scene, int pageNum) {
+    public RespEntity findSheetByScene(String scene, int pageNum,String order) {
+        String str = order+" desc";
         SheetExample sheetExample = new SheetExample();
+        sheetExample.setOrderByClause(str);
         SheetExample.Criteria criteria = sheetExample.createCriteria();
         criteria.andSceneEqualTo(scene);
         return find(pageNum,sheetExample);

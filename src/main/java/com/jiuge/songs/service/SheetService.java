@@ -18,49 +18,55 @@ public interface SheetService {
     /**
      * 搜索所有歌单
      * @param pageNum
+     * @param order
      * @return
      */
-    RespEntity findAllSheet(int pageNum);
+    RespEntity findAllSheet(int pageNum,String order);
 
     /**
      * 根据歌单名搜索歌单
      * @param sh_name
      * @param pageNum
+     * @param order
      * @return
      */
-    RespEntity findSheetsByName(String sh_name,int pageNum);
+    RespEntity findSheetsByName(String sh_name,int pageNum,String order);
 
     /**
      * 根据语种标签搜索歌单
      * @param language
      * @param pageNum
+     * @param order
      * @return
      */
-    RespEntity findSheetsByLanguage(String language,int pageNum);
+    RespEntity findSheetsByLanguage(String language,int pageNum,String order);
 
     /**
      * 根据风格标签搜索歌单
      * @param style
      * @param pageNum
+     * @param order
      * @return
      */
-    RespEntity findSheetsByStyle(String style,int pageNum);
+    RespEntity findSheetsByStyle(String style,int pageNum,String order);
 
     /**
      * 根据心情标签搜索歌单
      * @param mood
      * @param pageNum
+     * @param order
      * @return
      */
-    RespEntity findSheetsByMood(String mood,int pageNum);
+    RespEntity findSheetsByMood(String mood,int pageNum,String order);
 
     /**
      * 根据场景标签搜索歌单
      * @param scene
      * @param pageNum
+     * @param order
      * @return
      */
-    RespEntity findSheetByScene(String scene,int pageNum);
+    RespEntity findSheetByScene(String scene,int pageNum,String order);
 
     /**
      * 新建歌单

@@ -29,66 +29,72 @@ public class SheetController {
     /**
      * 所有歌单
      * @param pageNum
+     * @param order
      * @return
      */
     @GetMapping("/sheets")
-    public RespEntity findAllSheet(@RequestParam(defaultValue = "1") int pageNum){
-        return sheetService.findAllSheet(pageNum);
+    public RespEntity findAllSheet(@RequestParam(value = "pageNum",defaultValue = "1") int pageNum,@RequestParam("order") String order){
+        return sheetService.findAllSheet(pageNum,order);
     }
 
     /**
      * 按歌单名搜索歌单，支持模糊查询，分页查询
      * @param sh_name
      * @param pageNum
+     * @param order
      * @return
      */
     @GetMapping(value = "/sheets",params ="sh_name" )
-    public RespEntity findSheetsByName(@RequestParam("sh_name")String sh_name,@RequestParam(defaultValue = "1") int pageNum){
-        return sheetService.findSheetsByName(sh_name,pageNum);
+    public RespEntity findSheetsByName(@RequestParam("sh_name")String sh_name,@RequestParam(defaultValue = "1") int pageNum,@RequestParam("order") String order){
+        return sheetService.findSheetsByName(sh_name,pageNum,order);
     }
 
     /**
      * 按语种标签分类查找歌单
      * @param language
      * @param pageNum
+     * @param order
      * @return
      */
     @GetMapping(value = "/sheets",params = "language")
-    public RespEntity findSheetsByLanguage(@RequestParam("language")String language,@RequestParam(defaultValue = "1") int pageNum){
-        return sheetService.findSheetsByLanguage(language,pageNum);
+    public RespEntity findSheetsByLanguage(@RequestParam("language")String language,@RequestParam(defaultValue = "1") int pageNum,@RequestParam("order") String order){
+        return sheetService.findSheetsByLanguage(language,pageNum,order);
     }
 
     /**
      * 按风格标签分类查找歌单
      * @param style
      * @param pageNum
+     * @param order
      * @return
      */
     @GetMapping(value = "/sheets",params = "style")
-    public RespEntity findSheetsByStyle(@RequestParam("style")String style,@RequestParam(defaultValue = "1") int pageNum){
-        return sheetService.findSheetsByStyle(style,pageNum);
+    public RespEntity findSheetsByStyle(@RequestParam("style")String style,@RequestParam(defaultValue = "1") int pageNum,@RequestParam("order") String order){
+        return sheetService.findSheetsByStyle(style,pageNum,order);
     }
 
     /**
      * 按心情标签分类查找歌单
      * @param mood
      * @param pageNum
+     * @param order
      * @return
      */
     @GetMapping(value = "/sheets",params = "mood")
-    public RespEntity findSheetsByMood(@RequestParam("mood")String mood,@RequestParam(defaultValue = "1") int pageNum){
-        return sheetService.findSheetsByMood(mood,pageNum);
+    public RespEntity findSheetsByMood(@RequestParam("mood")String mood,@RequestParam(defaultValue = "1") int pageNum,@RequestParam("order") String order){
+        return sheetService.findSheetsByMood(mood,pageNum,order);
     }
 
     /**
      * 按场景标签分类查找歌单
      * @param scene
      * @param pageNum
+     * @param order
      * @return
      */
     @GetMapping(value = "/sheets",params = "scene")
-    public RespEntity findSheetsByScene(@RequestParam("scene")String scene,@RequestParam(defaultValue = "1") int pageNum){
-        return sheetService.findSheetByScene(scene,pageNum);
+    public RespEntity findSheetsByScene(@RequestParam("scene")String scene,@RequestParam(defaultValue = "1") int pageNum,@RequestParam("order") String order){
+        return sheetService.findSheetByScene(scene,pageNum,order);
     }
 
     /**

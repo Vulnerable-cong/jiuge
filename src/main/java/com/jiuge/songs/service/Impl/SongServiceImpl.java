@@ -68,22 +68,6 @@ public class SongServiceImpl implements SongService {
         return new RespEntity(RespCode.Success,file);
     }
 
-//    /**
-//     * 根据歌曲ID找到歌曲信息
-//     * 可只需要文件名，不想传输太多无用的东西
-//     * @param song_ID
-//     * @return
-//     */
-//    @Override
-//    public RespEntity findSongFile(int song_ID) {
-//        SongExample songExample = new SongExample();
-//        SongExample.Criteria criteria = songExample.createCriteria();
-//        criteria.andSong_IDEqualTo(song_ID);
-//        List<Song> file = songMapper.selectByExample(songExample);
-//        return new RespEntity(RespCode.Success,file);
-//    }
-
-
     /**
      * 增加播放量
      * 每次加一
